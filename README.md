@@ -136,4 +136,13 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 ### Justificación
 - La consulta de 20 registros requiere más recursos, se considera una instancia más realista.  
 
-## [Estructura de Archivos]([https://github.com/tu-usuario/tu-repo/tree/main/k8s-config](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config))
+## [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
+- k8s-config/namespace.yaml - Namespace de producción
+- k8s-config/secrets.yaml - Secretos de aplicación
+- k8s-config/configmap.yaml - Configuración
+- k8s-config/postgresql.yaml - Base de datos
+- k8s-config/redis.yaml - Caché Redis
+- k8s-config/nestjs-deployment.yaml - Backend principal
+- k8s-config/hpa-autoscaling.yaml - Autoescalado
+- k8s-config/services.yaml - Servicios y balanceo
+
