@@ -136,4 +136,4 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 ### Justificación
 - La consulta de 20 registros requiere más recursos, se considera una instancia más realista.  
 
-## [Estructura de Archivos](https://github.com/tu-usuario/tu-repo/tree/main/k8s-config)
+## [Estructura de Archivos]([https://github.com/tu-usuario/tu-repo/tree/main/k8s-config](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config))
