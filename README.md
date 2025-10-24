@@ -105,16 +105,16 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ### Pods mínimos para carga base
 
-100,000 / 163,440 = 0.612 → 2 pods
+- 100,000 / 163,440 = 0.612 → 2 pods
 
 **Decisión:** Se eligieron **2 pods** para alta disponibilidad.  
 
 ### Pods necesarios para 10x escalabilidad
 
-1,000,000 / 163,440 = 6.12 → 7 pods
+- 1,000,000 / 163,440 = 6.12 → 7 pods
 
 ### Pods máximos configurados
-**20 pods** (para crecimiento futuro).  
+- 20 pods: (para crecimiento futuro).  
 
 ---
 
@@ -131,9 +131,9 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 ## Equivalencia AWS
 
 - **Benchmark:** AMD Ryzen 7 7745HX (8 cores / 16 threads)  
-- **AWS equivalente:** c6i.xlarge (4 vCPUs, 8 GB RAM) → *mitad del tamaño*  
+- **AWS equivalente:** c6i.xlarge (4 vCPUs, 8 GB RAM) -> mitad del tamaño
 
 ### Justificación
-La consulta de **20 registros** requiere más recursos, por lo que se considera una instancia más realista.  
+- La consulta de 20 registros requiere más recursos, se considera una instancia más realista.  
 
  
