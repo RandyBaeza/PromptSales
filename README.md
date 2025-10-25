@@ -114,7 +114,7 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 - 1,000,000 / 163,440 = 6.12 → 7 pods
 
 ### Pods máximos configurados
-- 20 pods: (para crecimiento futuro).  
+- 7 pods: (para crecimiento futuro).  
 
 ---
 
