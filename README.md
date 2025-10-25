@@ -146,3 +146,71 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 - k8s-config/hpa-autoscaling.yaml - Autoescalado
 - k8s-config/services.yaml - Servicios y balanceo
 
+---
+
+## Reliability (Confiabilidad)
+
+La confiabilidad mide la capacidad del sistema para funcionar sin fallos bajo la carga definida. El diseño se centra en la detección proactiva de errores y la integridad de las transacciones, cumpliendo con los requisitos de monitoreo del caso.
+
+### 1. Métrica: Tasa de Error de Transacción
+
+* **Objetivo Cuantitativo:** La tasa de errores del servidor (respuestas HTTP $5xx$) debe ser inferior al **0.1%** del total de transacciones diarias.
+* **Parámetro Técnico:** Se monitorearán las métricas del *ingress controller* y los *logs* de los *pods* del *deployment* `nestjs-backend` para rastrear las respuestas $5xx$.
+* **Justificación:** Un objetivo del 0.1% establece un estándar alto, permitiendo fallos esporádicos (ej. reinicios de *pods*, timeouts de red) sin impactar la percepción de confiabilidad del usuario.
+
+### 2. Monitoreo y Alertas
+
+Para cumplir con el requisito de "monitoreo y notificación de alertas", se implementará una pila de observabilidad basada en Prometheus, Grafana y Loki.
+
+* **Logs Centralizados (Loki):**
+    * **Tecnología:** Se desplegará **Loki** con **Promtail** (como `DaemonSet`) en el clúster.
+    * **Implementación:** Promtail recolectará automáticamente los *logs* (stdout/stderr) de todos los contenedores dentro del *namespace* `nestjs-production`. Esto cumple el requisito de "logging centralizado".
+    * **Retención:** Los *logs* se almacenarán con una política de retención de **90 días**.
+
+* **Métricas de Base de Datos (Prometheus):**
+    * **Tecnología:** **Prometheus** + **PostgreSQL Exporter**.
+    * **Implementación:** Se activará la extensión `pg_stat_statements` en la instancia de PostgreSQL, como se solicita. El *exporter* consultará esta extensión y otras métricas de salud (ej. conexiones activas, bloqueos) y las expondrá para Prometheus.
+
+* **Sistema de Alertas (Alertmanager):**
+    * **Tecnología:** **Alertmanager** (integrado con Prometheus).
+    * **Notificación:** Las alertas se enviarán a canales de **Slack** (prioridad media) y **PagerDuty** (prioridad alta/crítica), según se determine la severidad.
+    * **Reglas de Alerta (Ejemplos):**
+        * `HighErrorRate`: Tasa de errores $5xx$ > 0.1% sostenida durante 5 minutos.
+        * `LowPodCount`: El número de *pods* del *deployment* `nestjs-backend` es menor que `minReplicas` (2).
+        * `HPASaturated`: El HPA `nestjs-hpa` ha alcanzado su `maxReplicas` (20).
+        * `LivenessProbeFailed`: K8s reporta fallos en la `livenessProbe` de un *pod* `nestjs-backend`.
+
+---
+
+## Availability (Disponibilidad)
+
+La disponibilidad mide el tiempo que el sistema está operativo y accesible. El diseño de la infraestructura en Kubernetes se orienta a cumplir el objetivo de disponibilidad mediante la redundancia de los componentes de la aplicación y la resiliencia de los datos.
+
+### 1. Métrica: Uptime
+
+* **Objetivo Cuantitativo:** Disponibilidad mínima del **99.9%** mensual.
+* **Parámetro Técnico:** Esto equivale a un tiempo máximo de inactividad permitido de **43.8 minutos por mes**.
+* **Medición:** Se utilizará un servicio de monitoreo externo (ej. Grafana Blackbox Exporter o UptimeRobot) que verifique el *endpoint* público del `LoadBalancer` a intervalos regulares (ej. 1 minuto).
+
+### 2. Diseño de Infraestructura
+
+La disponibilidad se logra mediante la siguiente arquitectura en Kubernetes:
+
+* **Capa 1: Balanceo de Carga y Aplicación (NestJS)**
+    * **Balanceo de Carga:** El servicio `nestjs-service` es de tipo `LoadBalancer`. Utiliza anotaciones para provisionar un **Network Load Balancer (NLB) de AWS**, cumpliendo el requisito de "Considere load balancers".
+    * **Redundancia de Aplicación:** El *deployment* `nestjs-backend` está configurado con `replicas: 2`. Esta decisión se basa en el cálculo de escalabilidad y garantiza alta disponibilidad para la aplicación: si un *pod* falla, el balanceador redirige el tráfico a la réplica saludable.
+    * **Auto-reparación:** El `nestjs-deployment.yaml` define `livenessProbe` y `readinessProbe`. Si un *pod* falla la `livenessProbe`, K8s lo reinicia automáticamente, cumpliendo el requisito de "reinicio automático ante fallos".
+    * **Escalabilidad Automática:** El HPA `nestjs-hpa` asegura la disponibilidad durante picos de carga, escalando automáticamente la aplicación desde `minReplicas: 2` hasta `maxReplicas: 20`.
+
+* **Capa 2: Base de Datos (PostgreSQL)**
+    * **Implementación:** La base de datos se despliega como un `StatefulSet` con `replicas: 1`, según se define en `postgresql.yaml`.
+    * **Persistencia:** La disponibilidad de los datos está garantizada por el `volumeClaimTemplates`, que provisiona un volumen de almacenamiento persistente. Si el *pod* de PostgreSQL falla, el `StatefulSet` lo reiniciará y lo volverá a conectar al mismo volumen de datos.
+
+* **Capa 3: Caché (Redis)**
+    * **Implementación:** La caché se despliega como un `Deployment` con `replicas: 1`, según se define en `redis.yaml`.
+    * **Recuperación:** Dado que Redis se usa para "datos cacheados" y "resultados temporales", un reinicio del *pod* (manejado por el `Deployment`) es aceptable. La aplicación NestJS recargará la caché desde PostgreSQL según sea necesario.
+
+* **Capa 4: Tolerancia a Fallos (Backups)**
+    * **Requerimiento:** El caso exige "backups automáticos diarios" con "retención mínima de 30 días".
+    * **Implementación:** Se configurará un `CronJob` de Kubernetes en el *namespace* `nestjs-production`.
+    * **Acción:** Este `CronJob` ejecutará una tarea diaria (ej. 3:00 AM) que utiliza `pg_dump` contra el servicio `postgres-service` y subirá el *backup* cifrado a un *bucket* de almacenamiento externo (ej. AWS S3). Dicho *bucket* tendrá una política de ciclo de vida que elimine los *backups* después de 30 días.
