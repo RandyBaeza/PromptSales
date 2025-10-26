@@ -218,14 +218,15 @@ La disponibilidad se logra mediante la siguiente arquitectura en Kubernetes:
 
 ## Security
 
-### 1. Autenticación y Autorización
+### 1. Autenticación y Autorización: Auth0
 
 #### Tecnologías:
 
 - **Auth0:** con soporte nativo para OAuth 2.0 y OpenID Connect.
-- **JWT (JSON Web Tokens):** firmados con RS256 para sesiones entre servicios.
+- **JWT (JSON Web Tokens):** con RS256 para sesiones entre servicios.
 - **Redis:** para almacenar tokens de acceso temporalmente.
 
+Cumple con estándares de protección de datos (GDPR, CCPA) y políticas de acceso mediante permisos de usuario.
 #### Rendimiento
 
 Benchmarks de Auth0 indican una latencia promedio de 120ms en Norteamérica y 600ms en regiones de Asia y el Pacífico. El uso de Redis para almacenar tokens JWT mejorará el rendimiento al reducir la carga de trabajo en la verificación de tokens.
@@ -236,38 +237,36 @@ Fuente: https://ssojet.com/blog/auth0-an-analysis-of-pros-and-cons/
 
 #### Tecnología:
 
-- TLS 1.3 con certificados Let’s Encrypt (RSA 2048 / ECDSA P-256).
-- Configuración “A+” según SSL Labs Benchmark.
-- Proxy de entrada: NGINX Ingress Controller en Kubernetes con soporte HTTP/2 + ALPN.
+- TLS 1.3 con certificados **Let’s Encrypt** (**RSA 2048** / **ECDSA P-256**).
+- Configuración con calificación “A+” según SSL Labs Benchmark.
+- Proxy de entrada: **NGINX Ingress Controller** en Kubernetes con soporte HTTP/2 + ALPN.
 
 #### Configuración:
 
-- Habilitado `ssl_prefer_server_ciphers on`; 
+- Habilitado `ssl_prefer_server_ciphers on;` para priorizar los cifrados más seguros. 
 - Ciphersuites: `TLS_AES_128_GCM_SHA256` y `TLS_CHACHA20_POLY1305_SHA256`.
+
+Un artículo menciona que con TLS 1.3 las conexiones “son dos veces más probables de completar el handshake bajo 100 ms comparado con TLS 1.2"
+
+Fuente: https://www.ietf.org/blog/tls13-adoption/
 
 ### 3. Cifrado en Reposo: AES-256
 
 #### Tecnologías:
 
-- PostgreSQL con pgcrypto (AES-256-CBC) para columnas sensibles.
-- Archivos de backup cifrados con AES-256-GCM mediante gpg antes de subirlos a S3.
+- PostgreSQL con **pgcrypto** (**AES-256-CBC**) para columnas sensibles.
+- Archivos de backup cifrados con **AES-256-GCM** mediante gpg antes de subirlos a S3.
 - Redis con tls-port habilitado y requirepass para cifrado y autenticación de sesiones cacheadas.
 
-#### Parámetro Técnico:
-
-- Rotación de claves cada 90 días (almacenadas en AWS KMS).
-- Datos en buckets con Server-Side Encryption (SSE-S3).
 
 ## Interoperability
 ### 1. Integración de APIs REST y MCP Servers
-
-Objetivo Cuantitativo:
-Tiempo máximo de integración (round-trip API) ≤ 700 ms entre subempresas (PromptContent - PromptAds - PromptCRM).
 
 #### Tecnologías:
 - REST APIs (JSON) sobre HTTPS para servicios externos.
 - MCP (Model Context Protocol) para comunicación segura entre servicios internos de IA.
 - OpenAPI 3.1 para documentación y validación automática.
+- Versionado de API: `/api/v<versión>/` para compatibilidad futura.
 
 #### Parámetros Técnicos:
 
@@ -275,34 +274,35 @@ Tiempo máximo de integración (round-trip API) ≤ 700 ms entre subempresas (Pr
 - Retry automático con backoff exponencial (hasta 3 intentos).
 - Circuit breaker activado (umbral: 5 fallos consecutivos).
 
-#### Justificación Técnica:
-Las pruebas con REST + MCP muestran un promedio de ~450 ms por intercambio con payloads de 2 KB–4 KB.
-El límite de 700 ms asegura margen suficiente para mantener la fluidez en la orquestación de IA y analítica distribuida.
 
 ## Extensibility
 
-### 1. Arquitectura Modular
+### 1. Domain-Driven Design
 
-- **Diseño:** El sistema está construido bajo una arquitectura modular basada en módulos independientes de NestJS, con separación lógica por dominio (ej. users, payments, prompts).
+- La arquitectura DDD permite incorporar nuevos dominios como unidades independientes.
 
-- **Ventaja:** Cada módulo puede añadirse, modificarse o eliminarse sin afectar el resto de la aplicación.
-
-- **Interconexión:** Los módulos se comunican mediante interfaces y servicios desacoplados (Dependecy Injection).
+- Facilita la evolución de la plataforma sin impactar los sistemas existentes. 
+ 
+- Los módulos se comunican mediante interfaces y servicios desacoplados (Dependecy Injection).
 
 ### 2. Soporte para Nuevas Subempresas
 
-- **Mecanismo:** Cada subempresa se cuenta con su propia base de datos, siguiendo la misma arquitectura mencionada anteriormente.
+- Cada subempresa se cuenta con su propia base de datos, siguiendo la misma arquitectura.
 
-- **Configuración Dinámica:** Los parámetros de cada subempresa (nombre, branding, endpoints, políticas) se almacenan en una tabla de metadatos, lo que permite registrar nuevas sin cambios en el código.
+- Los parámetros de cada subempresa (nombre, branding, endpoints, políticas) se almacenan en una tabla de metadatos, lo que permite registrar nuevas sin cambios en el código.
 
 ### 3. Extensibilidad del API
 
-**REST extensible:** Nuevos endpoints pueden añadirse fácilmente a través de nuevos controladores sin afectar las rutas existentes.
+- Nuevos endpoints pueden añadirse fácilmente a través de nuevos controladores sin afectar las rutas existentes.
 
-**Versionamiento:** El sistema soporta múltiples versiones del API (/api/v1, /api/v2), permitiendo coexistencia entre versiones antiguas y nuevas.
+- El sistema soporta múltiples versiones del API (`/api/v1`, `/api/v2`), permitiendo coexistencia entre versiones antiguas y nuevas.
 
 ### 4. Escalabilidad de Componentes
 
-**Infraestructura:** Kubernetes permite agregar nuevos módulos como Deployments independientes, cada uno con su propio ciclo de vida.
+- Kubernetes permite agregar nuevos módulos como Deployments independientes, cada uno con su propio ciclo de vida.
 
-**Despliegue:** El namespace de producción soporta múltiples servicios nuevos sin necesidad de reiniciar o modificar los existentes.
+- El namespace de producción soporta múltiples servicios nuevos sin necesidad de reiniciar o modificar los existentes.
+
+### 5. MCP Servers
+
+- Nuevos módulos o modelos de IA pueden integrarse al MCP sin alterar otros sistemas.
