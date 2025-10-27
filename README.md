@@ -341,4 +341,67 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 ---
 
 # 2. Domain Driven Design
-## Diagrama: ![Diagrama de Dominios](DDD&Contract_Diagram.pdf)
+
+El diseño del sistema se basa en Domain-Driven Design (DDD), separando la lógica de negocio en Dominios (Bounded Contexts) claros e independientes.
+
+## 2.1 Diagrama de Dominios
+
+El diagrama de arquitectura de dominios, sus capas (`Contract Layer`, `Modulos`, `Services`) y las pruebas (`Test`) se encuentra en el siguiente documento:
+
+* **Diagrama de Dominios y Contratos:** 
+
+[DDD&Contract\_Diagram.pdf](DDD&Contract_Diagram.pdf)
+
+## 2.2 Identificación de Dominios Principales
+
+El ecosistema se divide en cuatro dominios principales según el diagrama:
+
+* **Common:** Contiene lógica y contratos compartidos por todos los dominios, como la gestión de Servicios (facturación), APIs y Usuarios (autenticación).
+    * **Código Fuente:** [src/common/](<./src/common/>)
+* **PromptContent:** Responsable de toda la generación, adaptación y gestión de contenido creativo (texto, imágenes, video).
+    * **Código Fuente:** [src/prompt-content/](<./src/prompt-content>)
+* **PromptAds:** Gestiona la ejecución de campañas publicitarias, segmentación de audiencias, auto-configuración y análisis de rendimiento.
+    * **Código Fuente:** [src/prompt-ads/](<./src/prompt-ads>)
+* **PromptCrm:** Enfocado en la gestión de leads, bots de comunicación y seguimiento del cliente potencial.
+    * **Código Fuente:** [src/prompt-crm/](<./src/prompt-crm>)
+
+## 2.3 Contratos entre Dominios (Interfaces y APIs)
+
+La comunicación entre dominios se define estrictamente a través de la **Contract Layer**. Estas interfaces aseguran la independencia de los dominios y están vinculadas al código fuente.
+
+### Contratos de `Common`
+* **Contrato de Servicios (Facturación):** [src/common/contracts/billing.contract.ts](<./src/common/contracts/billing.contract.ts>)
+* **Contrato de Usuarios:** [src/common/contracts/user.contract.ts](<./src/common/contracts/user.contract.ts>)
+
+### Contratos de `PromptContent`
+* **Contrato Textual:** [src/prompt-content/contracts/text-content.contract.ts](<./src/prompt-content/contracts/text-content.contract.ts>)
+* **Contrato de Imágenes:** [src/prompt-content/contracts/image-content.contract.ts](<./src/prompt-content/contracts/image-content.contract.ts>)
+* **Contrato de Audio/Video:** [src/prompt-content/contracts/media-content.contract.ts](<./src/prompt-content/contracts/media-content.contract.ts>)
+* **Contrato de Plataformas:** [src/prompt-content/contracts/platform.contract.ts](<./src/prompt-content/contracts/platform.contract.ts>)
+
+### Contratos de `PromptAds`
+* **Contrato de Campaña:** [src/prompt-ads/contracts/campaign.contract.ts](<./src/prompt-ads/contracts/campaign.contract.ts>)
+* **Contrato de Auto-Configuración:** [src/prompt-ads/contracts/auto-config.contract.ts](<./src/prompt-ads/contracts/auto-config.contract.ts>)
+* **Contrato de Audiencias:** [src/prompt-ads/contracts/audience.contract.ts](<./src/prompt-ads/contracts/audience.contract.ts>)
+
+### Contratos de `PromptCrm`
+* **Contrato de Bot de Comunicación:** [src/prompt-crm/contracts/bot.contract.ts](<./src/prompt-crm/contracts/bot.contract.ts>)
+* **Contrato de Leads:** [src/prompt-crm/contracts/lead.contract.ts](<./src/prompt-crm/contracts/lead.contract.ts>)
+* **Contrato de Plataformas (CRM):** [src/prompt-crm/contracts/platform.contract.ts](<./src/prompt-crm/contracts/platform.contract.ts>)
+
+## 2.4 Facades para Simplificar Interacción
+
+Para cumplir con el requisito de "crear facades", el **Portal Web Unificado (`PromptSales`)** actuará como el orquestador. Implementará facades que consumen los contratos de los otros dominios para simplificar operaciones complejas.
+
+* **Facade: `CampaignOrchestratorFacade`**
+    * **Responsabilidad:** Simplifica el "Diseño de estrategias de mercadeo". Una sola llamada a esta facade inicia la generación de contenido en `PromptContent`, la creación de la campaña en `PromptAds` y la configuración de seguimiento en `PromptCrm`.
+    * **Ver Código:** [src/prompt-sales/application/facades/campaign-orchestrator.facade.ts](<./src/prompt-sales/application/facades/campaign-orchestrator.facade.ts>)
+
+## 2.5 Pruebas por Dominio
+
+El diseño incluye pruebas unitarias y de integración por dominio, como se refleja en la columna `Test` del diagrama.
+
+* **Pruebas de Contrato (Integración):** Verifican que la implementación de un servicio (ej. `PromptContent`) cumple con la interfaz (`IContentContract`) que espera el consumidor (ej. `PromptAds`).
+    * **Ejemplo:** [src/prompt-content/test/text-content.contract.test.ts](<./src/prompt-content/test/text-content.contract.test.ts>)
+* **Pruebas Unitarias (Unit Tests):** Prueban la lógica de negocio interna de los módulos y servicios de cada dominio.
+    * **Ejemplo:** [src/prompt-ads/test/audience-segmentation.unit.test.ts](<./src/prompt-ads/test/audience-segmentation.unit.test.ts>)
