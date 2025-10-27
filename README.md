@@ -272,8 +272,11 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 - El pipelining de CI/CD se implementará con GitHub Actions.
 
 ### Después
+
 L1->Guías escritas y Videos sobre uso del sistema accesibles desde la sección de ayuda del portal.
+
 L2->Contacto por correo electrónico al equipo de soporte técnico para problemas no incluidos en la sección de ayuda. El tiempo máximo es de dos hábiles para responder y cuatro para solucionar.
+
 L3->Para problemas recibidos por correo electrónico que requieran cambios en el sistema, se deben añadir como tickets en Jira. El tiempo máximo es de tres días hábiles para revisarlo y cinco para declarar como solucionado el ticket.
 
 
@@ -291,6 +294,15 @@ L3->Para problemas recibidos por correo electrónico que requieran cambios en el
 - Límite de tiempo de respuesta: 1 s máximo por integración.
 - Retry automático con backoff exponencial (hasta 3 intentos).
 - Circuit breaker activado (umbral: 5 fallos consecutivos).
+
+
+## Compliance
+
+- Uso de la extensión pgcrypto de PostgreSQL para datos sensibles de usuarios, pagos y empresas.
+- Implementación de TLS para la comunicación con PostgreSQL.
+- Protección de TLS keys por medio de Kubernetes Secrets.
+- Uso de OWASP ZAP. Deben haber un máximo de 0 alertas de nivel de riesgo alto, 5 de riesgo medio, 7 de riesgo bajo y 20 informativas.
+- Los pagos dentro del sistema se realizarán por medio de la integración de Stripe y PayPal.
 
 
 ## Extensibility
