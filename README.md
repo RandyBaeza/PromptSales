@@ -1,23 +1,23 @@
-# Métricas de los Requerimientos No Funcionales
+# 1. Métricas de los Requerimientos No Funcionales
 
-## Performance
+## 1.1 Performance
 
-### 1. Tecnologías Usadas
+### 1.1.1 Tecnologías Usadas
 - **Backend:** NestJS (Node.js) con API REST  
 - **Base de Datos:** PostgreSQL  
 - **Caché:** Redis  
 
-### Transacción Crítica
+### 1.1.2 Transacción Crítica
 **Operación Seleccionada:** "Consulta de múltiples registros del portal" (Lectura de 20 registros desde PostgreSQL + API REST NestJS).
 
-### Meta de Performance
+### 1.1.3 Meta de Performance
 - **Requerimiento de Carga:** 100,000 operaciones por minuto.  
 - **Requerimiento de Latencia:** Tiempo de respuesta < 2.5 segundos para operaciones estándar.  
 - **Equivalencia en TPS:** 100,000 TPM ≈ 1,667 transacciones por segundo.  
 
 ---
 
-### Benchmark de Referencia
+### 1.1.4 Benchmark de Referencia
 - **Tecnología:** NestJS (REST) + PostgreSQL  
 - **Benchmark Seleccionado:** "Consulta simple (1 registro)"
 - Para 20 registros: Supuesto de 4x mayor tiempo de respuesta
@@ -27,14 +27,14 @@
 - Throughput máximo: 10,896 req/s  
 - Hardware de prueba: AMD Ryzen 7 7745HX, 32 GB RAM, Windows 11/WSL
 
-  **Datos estimados sobre el benchmark:**
+**Datos estimados sobre el benchmark:**
  -  Tiempo de respuesta estimado (20 registros): 13.48 ms (3.37 ms × 4)
  -  Throughput máximo ajustado: 2,724 req/s (10,896 req/s ÷ 4)
   
 
 ---
 
-### Cálculos Preliminares (Usando Supuestos de 20 registros)
+### 1.1.5 Cálculos Preliminares (Usando Supuestos de 20 registros)
 
 **Cálculo Base de Capacidad:**
 - 2,724 req/s × 60 = 163,440 transacciones por minuto (TPM) por servidor.  
@@ -44,7 +44,7 @@ Un solo servidor del benchmark ajustado podría manejar ~163,440 TPM, por encima
 
 ---
 
-### Ajustar el Cálculo al Hardware
+### 1.1.6 Ajustar el Cálculo al Hardware
 **Hardware supuesto, servidor promedio:**  
 AMD Ryzen 9 7900 (12 núcleos / 24 hilos), 32 GB DDR5, SSD NVMe.  
 
@@ -60,7 +60,7 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ---
 
-### Dimensionar el Clúster para Alcanzar el Target
+### 1.1.7 Dimensionar el Clúster para Alcanzar el Target
 - **Target:** 100,000 TPM  
 - **Capacidad por Servidor Ajustada:** 245,160 TPM 
 
@@ -78,9 +78,9 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ---
 
-## Documentación
+### 1.1.8 Documentación
 
-### 1. Benchmark Utilizado
+#### Benchmark Utilizado
 - **Fuente:** "Performance Evaluation of REST and GraphQL"  
 - **Operación:** "Consulta simple (1 registro)"  
 - **Métricas:** 3.37 ms de latency, 10,896 req/s de throughput  
@@ -91,9 +91,9 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 
 
-# Cálculo para Escalabilidad
+## 1.2 Escalabilidad
 
-## Capacidad y Objetivos
+### 1.2.1 Capacidad y Objetivos
 
 - **Capacidad por pod:** 163,440 TPM  
 - **Target requerido:** 100,000 TPM  
@@ -101,24 +101,24 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ---
 
-## Cálculos Actualizados
+### 1.2.2 Cálculos Actualizados
 
-### Pods mínimos para carga base
+#### 1.2.2.1 Pods mínimos para carga base
 
 - 100,000 / 163,440 = 0.612 → 2 pods
 
 **Decisión:** Se eligieron **2 pods** para alta disponibilidad.  
 
-### Pods necesarios para 10x escalabilidad
+#### 1.2.2.2 Pods necesarios para 10x escalabilidad
 
 - 1,000,000 / 163,440 = 6.12 → 7 pods
 
-### Pods máximos configurados
+#### 1.2.2.3 Pods máximos configurados
 - 7 pods: (para crecimiento futuro).  
 
 ---
 
-## Capacidad Comprobada
+### 1.2.3 Capacidad Comprobada
 
 | Escenario | Pods | Capacidad Total (TPM) | Relación con Target |
 |------------|------|------------------------|----------------------|
@@ -128,15 +128,15 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ---
 
-## Equivalencia AWS
+### 1.2.4 Equivalencia AWS
 
 - **Benchmark:** AMD Ryzen 7 7745HX (8 cores / 16 threads)  
 - **AWS equivalente:** c6i.xlarge (4 vCPUs, 8 GB RAM) -> mitad del tamaño
 
-### Justificación
+#### 1.2.4.1 Justificación
 - La consulta de 20 registros requiere más recursos, se considera una instancia más realista.  
 
-## [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
+### 1.2.5 [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
 - k8s-config/namespace.yaml - Namespace de producción
 - k8s-config/secrets.yaml - Secretos de aplicación
 - k8s-config/configmap.yaml - Configuración
@@ -148,17 +148,17 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 
 ---
 
-## Reliability (Confiabilidad)
+## 1.3 Reliability (Confiabilidad)
 
 La confiabilidad mide la capacidad del sistema para funcionar sin fallos bajo la carga definida. El diseño se centra en la detección proactiva de errores y la integridad de las transacciones, cumpliendo con los requisitos de monitoreo del caso.
 
-### 1. Métrica: Tasa de Error de Transacción
+### 1.3.1 Métrica: Tasa de Error de Transacción
 
 * **Objetivo Cuantitativo:** La tasa de errores del servidor (respuestas HTTP $5xx$) debe ser inferior al **0.1%** del total de transacciones diarias.
 * **Parámetro Técnico:** Se monitorearán las métricas del *ingress controller* y los *logs* de los *pods* del *deployment* `nestjs-backend` para rastrear las respuestas $5xx$.
 * **Justificación:** Un objetivo del 0.1% establece un estándar alto, permitiendo fallos esporádicos (ej. reinicios de *pods*, timeouts de red) sin impactar la percepción de confiabilidad del usuario.
 
-### 2. Monitoreo y Alertas
+### 1.3.2 Monitoreo y Alertas
 
 Para cumplir con el requisito de "monitoreo y notificación de alertas", se implementará una pila de observabilidad basada en Prometheus, Grafana y Loki.
 
@@ -182,17 +182,17 @@ Para cumplir con el requisito de "monitoreo y notificación de alertas", se impl
 
 ---
 
-## Availability (Disponibilidad)
+## 1.4 Availability (Disponibilidad)
 
 La disponibilidad mide el tiempo que el sistema está operativo y accesible. El diseño de la infraestructura en Kubernetes se orienta a cumplir el objetivo de disponibilidad mediante la redundancia de los componentes de la aplicación y la resiliencia de los datos.
 
-### 1. Métrica: Uptime
+### 1.4.1 Métrica: Uptime
 
 * **Objetivo Cuantitativo:** Disponibilidad mínima del **99.9%** mensual.
 * **Parámetro Técnico:** Esto equivale a un tiempo máximo de inactividad permitido de **43.8 minutos por mes**.
 * **Medición:** Se utilizará un servicio de monitoreo externo (ej. Grafana Blackbox Exporter o UptimeRobot) que verifique el *endpoint* público del `LoadBalancer` a intervalos regulares (ej. 1 minuto).
 
-### 2. Diseño de Infraestructura
+### 1.4.2 Diseño de Infraestructura
 
 La disponibilidad se logra mediante la siguiente arquitectura en Kubernetes:
 
@@ -216,32 +216,32 @@ La disponibilidad se logra mediante la siguiente arquitectura en Kubernetes:
     * **Acción:** Este `CronJob` ejecutará una tarea diaria (ej. 3:00 AM) que utiliza `pg_dump` contra el servicio `postgres-service` y subirá el *backup* cifrado a un *bucket* de almacenamiento externo (ej. AWS S3). Dicho *bucket* tendrá una política de ciclo de vida que elimine los *backups* después de 30 días.
 
 
-## Security
+## 1.5 Security
 
-### 1. Autenticación y Autorización: Auth0
+### 1.5.1 Autenticación y Autorización: Auth0
 
-#### Tecnologías:
+#### 1.5.1.1 Tecnologías:
 
 - **Auth0:** con soporte nativo para OAuth 2.0 y OpenID Connect.
 - **JWT (JSON Web Tokens):** con RS256 para sesiones entre servicios.
 - **Redis:** para almacenar tokens de acceso temporalmente.
 
 Cumple con estándares de protección de datos (GDPR, CCPA) y políticas de acceso mediante permisos de usuario.
-#### Rendimiento
+#### 1.5.1.2 Rendimiento
 
 Benchmarks de Auth0 indican una latencia promedio de 120ms en Norteamérica y 600ms en regiones de Asia y el Pacífico. El uso de Redis para almacenar tokens JWT mejorará el rendimiento al reducir la carga de trabajo en la verificación de tokens.
 
 Fuente: https://ssojet.com/blog/auth0-an-analysis-of-pros-and-cons/
 
-### 2. Cifrado en Tránsito: TLS 1.3
+### 1.5.2 Cifrado en Tránsito: TLS 1.3
 
-#### Tecnología:
+#### 1.5.2.1 Tecnología:
 
 - TLS 1.3 con certificados **Let’s Encrypt** (**RSA 2048** / **ECDSA P-256**).
 - Configuración con calificación “A+” según SSL Labs Benchmark.
 - Proxy de entrada: **NGINX Ingress Controller** en Kubernetes con soporte HTTP/2 + ALPN.
 
-#### Configuración:
+#### 1.5.2.2 Configuración:
 
 - Habilitado `ssl_prefer_server_ciphers on;` para priorizar los cifrados más seguros. 
 - Ciphersuites: `TLS_AES_128_GCM_SHA256` y `TLS_CHACHA20_POLY1305_SHA256`.
@@ -250,18 +250,18 @@ Un artículo menciona que con TLS 1.3 las conexiones “son dos veces más proba
 
 Fuente: https://www.ietf.org/blog/tls13-adoption/
 
-### 3. Cifrado en Reposo: AES-256
+### 1.5.3 Cifrado en Reposo: AES-256
 
-#### Tecnologías:
+#### 1.5.3.1 Tecnologías:
 
 - PostgreSQL con **pgcrypto** (**AES-256-CBC**) para columnas sensibles.
 - Archivos de backup cifrados con **AES-256-GCM** mediante gpg antes de subirlos a S3.
 - Redis con tls-port habilitado y requirepass para cifrado y autenticación de sesiones cacheadas.
 
 
-## Maintainability
+## 1.6 Maintainability
 
-### Durante
+### 1.6.1 Durante
 
 - El codebase se manejará en GitHub, inicialmente con un solo repositorio.
 - Se usará Jira como sistema para tiquetes por sus capacidades específicas para desarrollo de software.
@@ -271,32 +271,32 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 - Va a haber un release cada mes para mantenimiento y mejoras regulares. Los releases de hotfixes deben tardar un máximo de tres días para fallos críticos y un máximo de una semana en otros casos, contando a partir de que se apruebe el tiquete para el cambio.
 - El pipelining de CI/CD se implementará con GitHub Actions.
 
-### Después
+### 1.6.2 Después
 
-L1->Guías escritas y Videos sobre uso del sistema accesibles desde la sección de ayuda del portal.
+&nbsp;&nbsp;&nbsp;&nbsp;L1->Guías escritas y Videos sobre uso del sistema accesibles desde la sección de ayuda del portal.
 
-L2->Contacto por correo electrónico al equipo de soporte técnico para problemas no incluidos en la sección de ayuda. El tiempo máximo es de dos hábiles para responder y cuatro para solucionar.
+&nbsp;&nbsp;&nbsp;&nbsp;L2->Contacto por correo electrónico al equipo de soporte técnico para problemas no incluidos en la sección de ayuda. El tiempo máximo es de dos hábiles para responder y cuatro para solucionar.
 
-L3->Para problemas recibidos por correo electrónico que requieran cambios en el sistema, se deben añadir como tickets en Jira. El tiempo máximo es de tres días hábiles para revisarlo y cinco para declarar como solucionado el ticket.
+&nbsp;&nbsp;&nbsp;&nbsp;L3->Para problemas recibidos por correo electrónico que requieran cambios en el sistema, se deben añadir como tickets en Jira. El tiempo máximo es de tres días hábiles para revisarlo y cinco para declarar como solucionado el ticket.
 
 
-## Interoperability
-### 1. Integración de APIs REST y MCP Servers
+## 1.7 Interoperability
+### 1.7.1 Integración de APIs REST y MCP Servers
 
-#### Tecnologías:
+#### 1.7.1.1 Tecnologías:
 - REST APIs (JSON) sobre HTTPS para servicios externos.
 - MCP (Model Context Protocol) para comunicación segura entre servicios internos de IA.
 - OpenAPI 3.1 para documentación y validación automática.
 - Versionado de API: `/api/v<versión>/` para compatibilidad futura.
 
-#### Parámetros Técnicos:
+#### 1.7.1.2 Parámetros Técnicos:
 
 - Límite de tiempo de respuesta: 1 s máximo por integración.
 - Retry automático con backoff exponencial (hasta 3 intentos).
 - Circuit breaker activado (umbral: 5 fallos consecutivos).
 
 
-## Compliance
+## 1.8 Compliance
 
 - Uso de la extensión pgcrypto de PostgreSQL para datos sensibles de usuarios, pagos y empresas.
 - Implementación de TLS para la comunicación con PostgreSQL.
@@ -305,9 +305,9 @@ L3->Para problemas recibidos por correo electrónico que requieran cambios en el
 - Los pagos dentro del sistema se realizarán por medio de la integración de Stripe y PayPal.
 
 
-## Extensibility
+## 1.9 Extensibility
 
-### 1. Domain-Driven Design
+### 1.9.1 Domain-Driven Design
 
 - La arquitectura DDD permite incorporar nuevos dominios como unidades independientes.
 
@@ -315,24 +315,24 @@ L3->Para problemas recibidos por correo electrónico que requieran cambios en el
  
 - Los módulos se comunican mediante interfaces y servicios desacoplados (Dependecy Injection).
 
-### 2. Soporte para Nuevas Subempresas
+### 1.9.2 Soporte para Nuevas Subempresas
 
 - Cada subempresa se cuenta con su propia base de datos, siguiendo la misma arquitectura.
 
 - Los parámetros de cada subempresa (nombre, branding, endpoints, políticas) se almacenan en una tabla de metadatos, lo que permite registrar nuevas sin cambios en el código.
 
-### 3. Extensibilidad del API
+### 1.9.3 Extensibilidad del API
 
 - Nuevos endpoints pueden añadirse fácilmente a través de nuevos controladores sin afectar las rutas existentes.
 
 - El sistema soporta múltiples versiones del API (`/api/v1`, `/api/v2`), permitiendo coexistencia entre versiones antiguas y nuevas.
 
-### 4. Escalabilidad de Componentes
+### 1.9.4 Escalabilidad de Componentes
 
 - Kubernetes permite agregar nuevos módulos como Deployments independientes, cada uno con su propio ciclo de vida.
 
 - El namespace de producción soporta múltiples servicios nuevos sin necesidad de reiniciar o modificar los existentes.
 
-### 5. MCP Servers
+### 1.9.5 MCP Servers
 
 - Nuevos módulos o modelos de IA pueden integrarse al MCP sin alterar otros sistemas.
