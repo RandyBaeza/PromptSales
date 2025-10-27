@@ -259,6 +259,24 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 - Redis con tls-port habilitado y requirepass para cifrado y autenticación de sesiones cacheadas.
 
 
+## Maintainability
+
+### Durante
+
+- El codebase se manejará en GitHub, inicialmente con un solo repositorio.
+- Se usará Jira como sistema para tiquetes por sus capacidades específicas para desarrollo de software.
+- Los branches y pull requests se manejarán según Gitflow.
+- Cada Branch se asociará a un tiquete de Jira relacionado al código, que debe ser referenciado en el nombre del branch y su PR.
+- El nombre de versiones del main branch seguirá el formato: V<mayor>.<menor>.<parche>; donde “mayor” es el número de versiones que contengan cambios en arquitectura o funcionalidades nuevas que apliquen sobre todo el procedimiento de las campañas; “menor” es el número de commit por versión mayor que contenga el resto de cambios en arquitectura o lógica y nuevas funcionalidades; “parche” es el número de commit por versión menor que provenga de hotfix branches.
+- Va a haber un release cada mes para mantenimiento y mejoras regulares. Los releases de hotfixes deben tardar un máximo de tres días para fallos críticos y un máximo de una semana en otros casos, contando a partir de que se apruebe el tiquete para el cambio.
+- El pipelining de CI/CD se implementará con GitHub Actions.
+
+### Después
+L1->Guías escritas y Videos sobre uso del sistema accesibles desde la sección de ayuda del portal.
+L2->Contacto por correo electrónico al equipo de soporte técnico para problemas no incluidos en la sección de ayuda. El tiempo máximo es de dos hábiles para responder y cuatro para solucionar.
+L3->Para problemas recibidos por correo electrónico que requieran cambios en el sistema, se deben añadir como tickets en Jira. El tiempo máximo es de tres días hábiles para revisarlo y cinco para declarar como solucionado el ticket.
+
+
 ## Interoperability
 ### 1. Integración de APIs REST y MCP Servers
 
