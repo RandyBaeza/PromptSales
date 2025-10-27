@@ -341,4 +341,4 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 ---
 
 # 2. Domain Driven Design
-## Diagrama: [Diagrama de Dominios](DDD&Contract Diagram.pdf)
+## Diagrama: ![Diagrama de Dominios](DDD&Contract_Diagram.pdf)
