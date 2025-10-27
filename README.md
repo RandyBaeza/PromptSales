@@ -336,3 +336,8 @@ Fuente: https://www.ietf.org/blog/tls13-adoption/
 ### 1.9.5 MCP Servers
 
 - Nuevos módulos o modelos de IA pueden integrarse al MCP sin alterar otros sistemas.
+
+---
+---
+
+# 2. Domain Driven Design
