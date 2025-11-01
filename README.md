@@ -125,7 +125,7 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 ---
  
 
-### 1.2.4 [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
+### 1.2.4 [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/src/k8s-config)
 - k8s-config/namespace.yaml - Namespace de producción
 - k8s-config/secrets.yaml - Secretos de aplicación
 - k8s-config/configmap.yaml - Configuración
