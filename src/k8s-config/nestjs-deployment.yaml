@@ -1,0 +1,85 @@
+# nestjs-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-backend
+  namespace: nestjs-production
+  labels:
+    app: nestjs-backend
+spec:
+  replicas: 2  # ← MÍNIMO 2 PODS (según cálculo)
+  selector:
+    matchLabels:
+      app: nestjs-backend
+  template:
+    metadata:
+      labels:
+        app: nestjs-backend
+    spec:
+      containers:
+      - name: nestjs-app
+        image: your-registry/nestjs-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: node-env
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: api-port
+        - name: DATABASE_URL
+          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)"
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: postgres-password
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: postgres-dbname
+        - name: REDIS_URL
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-secrets
+              key: redis-password
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: nestjs-secrets
+              key: jwt-secret
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"  # Equivalente a c6i.2xlarge (8 vCPUs)
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3

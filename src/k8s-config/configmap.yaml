@@ -1,0 +1,16 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: nestjs-production
+data:
+  postgres-host: "postgres-service.nestjs-production.svc.cluster.local"
+  postgres-dbname: "nest_production"
+  postgres-port: "5432"
+  redis-host: "redis-service.nestjs-production.svc.cluster.local"
+  redis-port: "6379"
+  node-env: "production"
+  api-port: "3000"
+  max-campaigns: "5000"
+  max-concurrent-users: "300"
