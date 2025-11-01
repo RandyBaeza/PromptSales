@@ -120,7 +120,7 @@ Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registro
 |------------|------|------------------------|----------------------|
 | Mínimo     | 2    | 326,880 TPM            | 3.27x el target requerido |
 | 10x        | 7    | 1,144,080 TPM          | 1.14x el target de 1 millón |
-| Máximo     | 20   | 3,268,800 TPM          | 32.69x el target requerido |
+
 
 ---
  
