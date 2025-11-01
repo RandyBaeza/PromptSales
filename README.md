@@ -2,6 +2,8 @@
 
 
 
+# 1. Métricas de los Requerimientos No Funcionales
+
 ## 1.1 Performance
 
 ### 1.1.1 Tecnologías Usadas
@@ -9,45 +11,34 @@
 - **Base de Datos:** PostgreSQL  
 - **Caché:** Redis  
 
----
-
 ### 1.1.2 Transacción Crítica
-**Operación Seleccionada:**  
-> "Consulta de múltiples registros del portal"  
-(Lectura de 20 registros desde PostgreSQL + API REST NestJS)
-
----
+**Operación Seleccionada:** "Consulta de múltiples registros del portal" (Lectura de 20 registros desde PostgreSQL + API REST NestJS).
 
 ### 1.1.3 Meta de Performance
-- **Requerimiento de Carga:** 100,000 operaciones por minuto  
-- **Requerimiento de Latencia:** Tiempo de respuesta < **2.5 segundos** para operaciones estándar  
-- **Equivalencia en TPS:**  
-  100,000 TPM ≈ **1,667 transacciones por segundo (TPS)**  
+- **Requerimiento de Carga:** 100,000 operaciones por minuto.  
+- **Requerimiento de Latencia:** Tiempo de respuesta < 2.5 segundos para operaciones estándar.  
+- **Equivalencia en TPS:** 100,000 TPM ≈ 1,667 transacciones por segundo.  
 
 ---
 
 ### 1.1.4 Benchmark de Referencia
-**Benchmark utilizado:** _Performance Evaluation of REST and GraphQL_
+- **Tecnología:** NestJS (REST) + PostgreSQL  
+- **Benchmark Seleccionado:** "Consulta simple (1 registro)"
+- Para 20 registros: Supuesto de 4x mayor tiempo de respuesta
 
- [Enlace al estudio](https://www.researchgate.net/publication/376998157_Nodejs_Performance_Benchmarking_and_Analysis_at_Virtualbox_Docker_and_Podman_Environment_Using_Node-Bench_Method)
+[Enlace al estudio](https://www.researchgate.net/publication/376998157_Nodejs_Performance_Benchmarking_and_Analysis_at_Virtualbox_Docker_and_Podman_Environment_Using_Node-Bench_Method)
 
 **Datos Clave del Benchmark:**
-| Parámetro | Valor |
-|------------|--------|
-| **Tecnología** | NestJS (REST) + PostgreSQL |
-| **Operación** | Consulta simple (1 registro) |
-| **Tiempo de respuesta** | 3.37 ms |
-| **Throughput máximo** | 10,896 req/s |
-| **Hardware de prueba** | AMD Ryzen 7 7745HX, 32 GB RAM, Windows 11/WSL |
+- Tiempo de respuesta: 3.37 ms
+- Throughput máximo: 10,896 req/s  
+- Hardware de prueba: AMD Ryzen 7 7745HX, 32 GB RAM, Windows 11/WSL
 
-**Ajuste para 20 registros:**
-| Métrica | Cálculo | Resultado |
-|----------|----------|------------|
-| Tiempo de respuesta estimado | 3.37 ms × 4 | **13.48 ms** |
-| Throughput máximo ajustado | 10,896 req/s ÷ 4 | **2,724 req/s** |
+**Datos estimados sobre el benchmark:**
+ -  Tiempo de respuesta estimado (20 registros): 13.48 ms (3.37 ms × 4)
+ -  Throughput máximo ajustado: 2,724 req/s (10,896 req/s ÷ 4)
+  
 
 ---
-
 ### 1.1.5 Especificación de Hardware y Configuración del Cluster
 
 **Hardware en Cloud Provider**
@@ -58,54 +49,40 @@
 - Capacidad base: 2,724 req/s × 60 = **163,440 TPM**  
 - Con hardware mejorado (+50%): **245,160 TPM por servidor**
 
-**Configuración Final del Cluster:**
-| Parámetro | Valor |
-|------------|--------|
-| **Cluster** | 2 servidores en configuración activo-activo |
-| **Capacidad total** | 490,320 TPM |
-| **Requerido** | 100,000 TPM |
-| **Justificación** | Alta disponibilidad, mantenimiento sin downtime y escalabilidad futura |
-
 ---
 
-## 1.2 Escalabilidad
-
-### 1.2.1 Capacidad y Objetivos
-| Parámetro | Valor |
-|------------|--------|
-| **Capacidad por pod** | 163,440 TPM |
-| **Target requerido** | 100,000 TPM |
-| **Target máximo (10x)** | 1,000,000 TPM |
-
----
-
-### 1.2.2 Cálculos de Escalabilidad
-
-#### 1.2.2.1 Pods mínimos para carga base
-100,000 / 163,440 = 0.612 → 2 pods (para alta disponibilidad)
+### 1.1.6 Ajustar el Cálculo al Hardware
 
 
-#### 1.2.2.2 Pods necesarios para 10x escalabilidad
-1,000,000 / 163,440 = 6.12 → 7 pods
+**Supuesto de Mejora:**  
+50% más de potencia → 1.5x de mejoría.  
 
-#### 1.2.2.3 Pods máximos configurados
+**Cálculo Ajustado:**  
+- Nueva capacidad por servidor: 163,440 TPM × 1.5 = 245,160 TPM. 
 
-7 pods → crecimiento futuro
+**Conclusión:**  
+Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registros.
 
 
 ---
 
-### 1.2.3 Capacidad Comprobada
+### 1.1.7 Dimensionar el Clúster para Alcanzar el Target
+- **Target:** 100,000 TPM  
+- **Capacidad por Servidor Ajustada:** 245,160 TPM 
 
-| Escenario | Pods | Capacidad Total (TPM) | Relación con Target |
-|------------|------|------------------------|----------------------|
-| **Mínimo** | 2 | 326,880 | 3.27× el target requerido |
-| **10x** | 7 | 1,144,080 | 1.14× el target de 1 millón |
-| **Máximo** | 20 | 3,268,800 | 32.69× el target requerido |
+**Cálculo Teórico:**
+- Servidores necesarios = 100,000 / 245,160 ≈ **0.408  servidores**
+
+**Decisión de Diseño:**
+- Clúster de **2 servidores** en configuración activo-activo.  
+
+**Justificación:**
+- Alta disponibilidad: Redundancia en caso de fallos.  
+- Capacidad de sobra: 490,320 TPM total vs 100,000 TPM requerido.
+- Mantenimiento sin downtime: Permite actualizaciones sin interrumpir servicio.  
+- Preparación para crecimiento: Capacidad para manejar aumento de tráfico futuro.  
 
 ---
-
-
 
 
 
@@ -146,16 +123,9 @@
 | Máximo     | 20   | 3,268,800 TPM          | 32.69x el target requerido |
 
 ---
+ 
 
-### 1.2.4 Equivalencia AWS
-
-- **Benchmark:** AMD Ryzen 7 7745HX (8 cores / 16 threads)  
-- **AWS equivalente:** c6i.xlarge (4 vCPUs, 8 GB RAM) -> mitad del tamaño
-
-#### 1.2.4.1 Justificación
-- La consulta de 20 registros requiere más recursos, se considera una instancia más realista.  
-
-### 1.2.5 [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
+### 1.2.4 [Estructura de Archivos](https://github.com/RandyBaeza/PromptSales/tree/main/k8s-config)
 - k8s-config/namespace.yaml - Namespace de producción
 - k8s-config/secrets.yaml - Secretos de aplicación
 - k8s-config/configmap.yaml - Configuración
@@ -164,6 +134,7 @@
 - k8s-config/nestjs-deployment.yaml - Backend principal
 - k8s-config/hpa-autoscaling.yaml - Autoescalado
 - k8s-config/services.yaml - Servicios y balanceo
+
 
 ---
 
