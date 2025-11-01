@@ -1,5 +1,7 @@
 # 1. Métricas de los Requerimientos No Funcionales
 
+
+
 ## 1.1 Performance
 
 ### 1.1.1 Tecnologías Usadas
@@ -7,86 +9,103 @@
 - **Base de Datos:** PostgreSQL  
 - **Caché:** Redis  
 
+---
+
 ### 1.1.2 Transacción Crítica
-**Operación Seleccionada:** "Consulta de múltiples registros del portal" (Lectura de 20 registros desde PostgreSQL + API REST NestJS).
+**Operación Seleccionada:**  
+> "Consulta de múltiples registros del portal"  
+(Lectura de 20 registros desde PostgreSQL + API REST NestJS)
+
+---
 
 ### 1.1.3 Meta de Performance
-- **Requerimiento de Carga:** 100,000 operaciones por minuto.  
-- **Requerimiento de Latencia:** Tiempo de respuesta < 2.5 segundos para operaciones estándar.  
-- **Equivalencia en TPS:** 100,000 TPM ≈ 1,667 transacciones por segundo.  
+- **Requerimiento de Carga:** 100,000 operaciones por minuto  
+- **Requerimiento de Latencia:** Tiempo de respuesta < **2.5 segundos** para operaciones estándar  
+- **Equivalencia en TPS:**  
+  100,000 TPM ≈ **1,667 transacciones por segundo (TPS)**  
 
 ---
 
 ### 1.1.4 Benchmark de Referencia
-- **Tecnología:** NestJS (REST) + PostgreSQL  
-- **Benchmark Seleccionado:** "Consulta simple (1 registro)"
-- Para 20 registros: Supuesto de 4x mayor tiempo de respuesta
-
-**Datos Clave del Benchmark:**
-- Tiempo de respuesta: 3.37 ms
-- Throughput máximo: 10,896 req/s  
-- Hardware de prueba: AMD Ryzen 7 7745HX, 32 GB RAM, Windows 11/WSL
-
-**Datos estimados sobre el benchmark:**
- -  Tiempo de respuesta estimado (20 registros): 13.48 ms (3.37 ms × 4)
- -  Throughput máximo ajustado: 2,724 req/s (10,896 req/s ÷ 4)
-  
-
----
-
-### 1.1.5 Cálculos Preliminares (Usando Supuestos de 20 registros)
-
-**Cálculo Base de Capacidad:**
-- 2,724 req/s × 60 = 163,440 transacciones por minuto (TPM) por servidor.  
-
-**Conclusión:**  
-Un solo servidor del benchmark ajustado podría manejar ~163,440 TPM, por encima del target de 100,000 TPM.
-
----
-
-### 1.1.6 Ajustar el Cálculo al Hardware
-**Hardware supuesto, servidor promedio:**  
-AMD Ryzen 9 7900 (12 núcleos / 24 hilos), 32 GB DDR5, SSD NVMe.  
-
-**Supuesto de Mejora:**  
-50% más de potencia → 1.5x de mejoría.  
-
-**Cálculo Ajustado:**  
-- Nueva capacidad por servidor: 163,440 TPM × 1.5 = 245,160 TPM. 
-
-**Conclusión:**  
-Cada servidor propuesto puede manejar ~245,160 TPM para consultas de 20 registros.
-
-
----
-
-### 1.1.7 Dimensionar el Clúster para Alcanzar el Target
-- **Target:** 100,000 TPM  
-- **Capacidad por Servidor Ajustada:** 245,160 TPM 
-
-**Cálculo Teórico:**
-- Servidores necesarios = 100,000 / 245,160 ≈ **0.408  servidores**
-
-**Decisión de Diseño:**
-- Clúster de **2 servidores** en configuración activo-activo.  
-
-**Justificación:**
-- Alta disponibilidad: Redundancia en caso de fallos.  
-- Capacidad de sobra: 490,320 TPM total vs 100,000 TPM requerido.
-- Mantenimiento sin downtime: Permite actualizaciones sin interrumpir servicio.  
-- Preparación para crecimiento: Capacidad para manejar aumento de tráfico futuro.  
-
----
-
-### 1.1.8 Documentación
-
-#### Benchmark Utilizado
-- **Fuente:** "Performance Evaluation of REST and GraphQL"  
-- **Operación:** "Consulta simple (1 registro)"  
-- **Métricas:** 3.37 ms de latency, 10,896 req/s de throughput  
-- **Hardware de referencia:** AMD Ryzen 7 7745HX, 32GB RAM  
+**Benchmark utilizado:** _Performance Evaluation of REST and GraphQL_
 
  [Enlace al estudio](https://www.researchgate.net/publication/376998157_Nodejs_Performance_Benchmarking_and_Analysis_at_Virtualbox_Docker_and_Podman_Environment_Using_Node-Bench_Method)
+
+**Datos Clave del Benchmark:**
+| Parámetro | Valor |
+|------------|--------|
+| **Tecnología** | NestJS (REST) + PostgreSQL |
+| **Operación** | Consulta simple (1 registro) |
+| **Tiempo de respuesta** | 3.37 ms |
+| **Throughput máximo** | 10,896 req/s |
+| **Hardware de prueba** | AMD Ryzen 7 7745HX, 32 GB RAM, Windows 11/WSL |
+
+**Ajuste para 20 registros:**
+| Métrica | Cálculo | Resultado |
+|----------|----------|------------|
+| Tiempo de respuesta estimado | 3.37 ms × 4 | **13.48 ms** |
+| Throughput máximo ajustado | 10,896 req/s ÷ 4 | **2,724 req/s** |
+
+---
+
+### 1.1.5 Especificación de Hardware y Configuración del Cluster
+
+**Hardware en Cloud Provider**
+- **Tipo de instancia AWS:** `c6i.2xlarge` (8 vCPUs, 16 GB RAM)  
+- **Justificación:** Equivalente mejorado del hardware de benchmark, optimizado para cargas de base de datos  
+
+**Cálculo de Capacidad por Servidor:**
+- Capacidad base: 2,724 req/s × 60 = **163,440 TPM**  
+- Con hardware mejorado (+50%): **245,160 TPM por servidor**
+
+**Configuración Final del Cluster:**
+| Parámetro | Valor |
+|------------|--------|
+| **Cluster** | 2 servidores en configuración activo-activo |
+| **Capacidad total** | 490,320 TPM |
+| **Requerido** | 100,000 TPM |
+| **Justificación** | Alta disponibilidad, mantenimiento sin downtime y escalabilidad futura |
+
+---
+
+## 1.2 Escalabilidad
+
+### 1.2.1 Capacidad y Objetivos
+| Parámetro | Valor |
+|------------|--------|
+| **Capacidad por pod** | 163,440 TPM |
+| **Target requerido** | 100,000 TPM |
+| **Target máximo (10x)** | 1,000,000 TPM |
+
+---
+
+### 1.2.2 Cálculos de Escalabilidad
+
+#### 1.2.2.1 Pods mínimos para carga base
+100,000 / 163,440 = 0.612 → 2 pods (para alta disponibilidad)
+
+
+#### 1.2.2.2 Pods necesarios para 10x escalabilidad
+1,000,000 / 163,440 = 6.12 → 7 pods
+
+#### 1.2.2.3 Pods máximos configurados
+
+7 pods → crecimiento futuro
+
+
+---
+
+### 1.2.3 Capacidad Comprobada
+
+| Escenario | Pods | Capacidad Total (TPM) | Relación con Target |
+|------------|------|------------------------|----------------------|
+| **Mínimo** | 2 | 326,880 | 3.27× el target requerido |
+| **10x** | 7 | 1,144,080 | 1.14× el target de 1 millón |
+| **Máximo** | 20 | 3,268,800 | 32.69× el target requerido |
+
+---
+
+
 
 
 
