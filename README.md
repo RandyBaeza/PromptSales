@@ -360,3 +360,8 @@ El diseño incluye pruebas unitarias y de integración por dominio, como se refl
     * **Ejemplo:** [src/prompt-content/test/text-content.contract.test.ts](<./src/prompt-content/test/text-content.contract.test.ts>)
 * **Pruebas Unitarias (Unit Tests):** Prueban la lógica de negocio interna de los módulos y servicios de cada dominio.
     * **Ejemplo:** [src/prompt-ads/test/audience-segmentation.unit.test.ts](<./src/prompt-ads/test/audience-segmentation.unit.test.ts>)
+
+# Entregable #2
+
+
+[DDD&Contract\_Diagram.pdf](DDD&Contract_Diagram.pdf)
