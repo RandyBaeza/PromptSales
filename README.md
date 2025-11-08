@@ -364,4 +364,5 @@ El diseño incluye pruebas unitarias y de integración por dominio, como se refl
 # Entregable #2
 
 
-[DDD&Contract\_Diagram.pdf](DDD&Contract_Diagram.pdf)
+[View Architecture Diagram](./Arquitectura1.pdf)
+
