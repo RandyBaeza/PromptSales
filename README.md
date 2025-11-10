@@ -361,8 +361,16 @@ El diseño incluye pruebas unitarias y de integración por dominio, como se refl
 * **Pruebas Unitarias (Unit Tests):** Prueban la lógica de negocio interna de los módulos y servicios de cada dominio.
     * **Ejemplo:** [src/prompt-ads/test/audience-segmentation.unit.test.ts](<./src/prompt-ads/test/audience-segmentation.unit.test.ts>)
 
-# Entregable #2
+# Diagrama de Arquitectura
 
 
-[View Architecture Diagram](./Arquitectura1.pdf)
+[Ver Diagrama de Arquitectura](./DiagramaArquitectura.pdf)
 
+## Patrones de Arquitectura utilizados
+
+- Layered Architecture
+- Domain Driven Design
+- REST
+- API Gateway
+- Pub/Sub
+- Anti-Corruption Layer 
