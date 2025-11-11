@@ -374,3 +374,90 @@ El diseño incluye pruebas unitarias y de integración por dominio, como se refl
 - API Gateway
 - Pub/Sub
 - Anti-Corruption Layer 
+
+# 3. Arquitectura del Sistema
+
+La arquitectura del sistema está diseñada para ser modular, escalable y mantenible, alineada con los principios de Domain-Driven Design (DDD) y los requisitos no funcionales.
+
+## 3.1 Diagrama General de Arquitectura
+
+El siguiente diagrama ilustra los componentes principales, sus interacciones, las tecnologías seleccionadas y las capas de la aplicación.
+
+* **Diagrama de Arquitectura:** [DiagramaArquitectura.pdf](<./DiagramaArquitectura.pdf>)
+
+
+
+## 3.2 Selección de Plataforma y Cloud Provider
+
+### Cloud Provider: Amazon Web Services (AWS)
+Se ha seleccionado **AWS** como el proveedor de nube principal. Esto nos permite utilizar servicios gestionados que cumplen con nuestros requisitos de escalabilidad y disponibilidad:
+* **Amazon EKS (Elastic Kubernetes Service):** Para la orquestación de nuestros microservicios de backend (dominios).
+* **Amazon RDS (PostgreSQL):** Como base de datos relacional gestionada.
+* **Amazon ElastiCache (Redis):** Para nuestra caché centralizada de alto rendimiento.
+* **Amazon SNS (Simple Notification Service):** Para la implementación del patrón Pub/Sub en la comunicación asíncrona entre dominios.
+* **Amazon API Gateway:** Como punto de entrada único para todas las solicitudes, gestionando la seguridad y el enrutamiento.
+* **Amazon S3:** Para el almacenamiento de backups y artefactos de contenido estático.
+
+### Justificación de Vercel y Kubernetes
+La arquitectura sigue un enfoque híbrido para aprovechar lo mejor de cada plataforma:
+
+* **Vercel:** Se utilizará para el despliegue del **Portal Web Unificado (Frontend)**. Su integración nativa con Next.js/React y su CI/CD global optimizado para el rendimiento del frontend lo hacen ideal para la aplicación del cliente.
+* **Kubernetes (AWS EKS):** Se utilizará para todos los servicios de **Backend (Dominios)**. Vercel no es adecuado para ejecutar nuestros servicios de NestJS, ya que necesitamos control granular sobre el entorno, los recursos (CPU/Memoria) y el escalado basado en métricas (HPA).
+
+## 3.3 Patrones de Arquitectura y Diseño (Vinculados a Código)
+
+La arquitectura combina varios patrones para lograr los objetivos del proyecto:
+
+* **Domain-Driven Design (DDD):** La arquitectura general se basa en los dominios, contratos y clientes definidos en la **Sección 2: Domain Driven Design**.
+* **Arquitectura de Microservicios:** Cada Dominio (`PromptContent`, `PromptAds`, etc.) se despliega como un microservicio independiente en Kubernetes, permitiendo escalado y mantenimiento individual.
+* **API Gateway:** Implementado con **Amazon API Gateway**, actúa como el único punto de entrada (`Single Point of Entry`) para el frontend de Vercel y clientes externos. Gestiona la autenticación (Auth0) y enruta las solicitudes a los servicios correctos en EKS.
+* **Event-Driven (Pub/Sub):** Para comunicaciones asíncronas que no requieren una respuesta inmediata (ej. "Campaña Creada").
+    * **Implementación:** Se usará **Amazon SNS**. Por ejemplo, la `CampaignOrchestratorFacade` publicará un evento en un tópico SNS después de crear una campaña, y los dominios de `PromptCrm` o `PromptAds` (Analytics) estarán suscritos a ese tópico.
+    * **Código de Ejemplo (Publicador):** [campaign-orchestrator.facade.ts](<./src/prompt-sales/application/facades/campaign-orchestrator.facade.ts>)
+* **Facade Pattern:** Se utiliza para simplificar operaciones complejas que involucran múltiples dominios, como se describe en la Sección 2.4.
+    * **Código:** [campaign-orchestrator.facade.ts](<./src/prompt-sales/application/facades/campaign-orchestrator.facade.ts>)
+* **Anti-Corruption Layer (ACL):** Implementado a través de la **Capa de Cliente** (ver Sección 2.3). Esta capa aísla nuestro dominio `PromptSales` de los detalles de implementación de los dominios `PromptContent`, `PromptAds`, etc.
+    * **Código:** [prompt-content.client.ts](<./src/prompt-content/client/prompt-content.client.ts>)
+* **Repository Pattern:** Se utilizará para abstraer la lógica de acceso a datos. La Capa de Servicio dependerá de interfaces de Repositorio, no directamente de PostgreSQL.
+
+## 3.4 Guía de Programación por Capas
+
+Cada microservicio de dominio sigue una arquitectura de capas limpia, como se muestra en el diagrama:
+
+1.  **Handler Layer (Controladores):**
+    * **Responsabilidad:** Recibir peticiones HTTP/REST, validar DTOs (Data Transfer Objects) y llamar a la capa de servicio. No debe contener lógica de negocio.
+    * **Seguridad:** Aquí se implementarán los **NestJS Guards** para la validación de tokens JWT (provenientes de Auth0) y la autorización basada en roles.
+2.  **Service Layer (Servicios):**
+    * **Responsabilidad:** Contiene toda la lógica de negocio principal. Orquesta llamadas a la capa de Repositorio (para acceso a BD) o a la Capa de Cliente (para comunicarse con otros dominios).
+    * **Código:** [text-content.service.ts](<./src/prompt-content/services/text-content.service.ts>)
+3.  **Client Layer (Clientes):**
+    * **Responsabilidad:** Implementa el patrón ACL. Es la única capa autorizada para realizar comunicaciones *salientes* a otros dominios.
+    * **Código:** [prompt-content.client.ts](<./src/prompt-content/client/prompt-content.client.ts>)
+4.  **Repository Layer (Repositorios):**
+    * **Responsabilidad:** Abstrae el acceso a la base de datos. Define métodos como `findById`, `create`, etc. Esta capa implementará la lógica de conexión a PostgreSQL.
+
+## 3.5 Diagrama de Clases
+
+El flujo más crítico es la orquestación de campañas. El siguiente diagrama de clases UML muestra la implementación del Patrón Facade para este flujo:
+
+
+
+* La clase `CampaignOrchestratorFacade` implementa el método `lanzarEstrategia(dto: EstrategiaDto)`.
+* Depende de las *interfaces* de los Clientes (`IContentClient`, `IAdsClient`, `ICrmClient`), no de sus implementaciones concretas, siguiendo el principio de Inversión de Dependencias (DIP).
+
+## 3.6 Tecnologías y Versionamiento
+
+| Categoría | Tecnología | Versión | Rol y Justificación |
+| :--- | :--- | :--- | :--- |
+| **Backend** | NestJS | ~10.x | Framework principal para el backend, basado en TypeScript y arquitectura modular. |
+| **Orquestación** | Kubernetes (AWS EKS) | ~1.28 | Orquestador de contenedores para alta disponibilidad y autoescalado. |
+| **Base de Datos** | PostgreSQL | 15 | Motor de BD relacional principal (AWS RDS). |
+| **Caché** | Redis | 7-alpine | Caché de alto rendimiento para tokens y resultados de IA (AWS ElastiCache). |
+| **Frontend** | Vercel / Next.js | N/A | Plataforma de despliegue para el portal web. |
+| **Autenticación** | Auth0 | N/A | Proveedor de Identidad para OAuth 2.0 y JWT. |
+| **Eventos** | Amazon SNS | N/A | Servicio de Pub/Sub para comunicación asíncrona. |
+| **Gateway** | Amazon API Gateway | N/A | Punto de entrada único para gestionar, asegurar y enrutar APIs. |
+| **Workflow (MCP)**| N8N | N/A | Herramienta de orquestación de workflows (low-code) para flujos de MCP. |
+| **CI/CD** | GitHub Actions | N/A | Plataforma de CI/CD para construir imágenes Docker y desplegar en EKS/Vercel. |
+
+El **control de versiones** del código se gestionará mediante **GitFlow** (branches `main`, `develop`, `feature/`, `hotfix/`) y las versiones de la aplicación seguirán el **Versionamiento Semántico (SemVer)** (ej. `v1.0.0`).
