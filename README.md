@@ -366,14 +366,7 @@ El diseño incluye pruebas unitarias y de integración por dominio, como se refl
 
 [Ver Diagrama de Arquitectura](./DiagramaArquitectura.pdf)
 
-## Patrones de Arquitectura utilizados
 
-- Layered Architecture
-- Domain Driven Design
-- REST
-- API Gateway
-- Pub/Sub
-- Anti-Corruption Layer 
 
 # 3. Arquitectura del Sistema
 
@@ -409,7 +402,6 @@ La arquitectura sigue un enfoque híbrido para aprovechar lo mejor de cada plata
 La arquitectura combina varios patrones para lograr los objetivos del proyecto:
 
 * **Domain-Driven Design (DDD):** La arquitectura general se basa en los dominios, contratos y clientes definidos en la **Sección 2: Domain Driven Design**.
-* **Arquitectura de Microservicios:** Cada Dominio (`PromptContent`, `PromptAds`, etc.) se despliega como un microservicio independiente en Kubernetes, permitiendo escalado y mantenimiento individual.
 * **API Gateway:** Implementado con **Amazon API Gateway**, actúa como el único punto de entrada (`Single Point of Entry`) para el frontend de Vercel y clientes externos. Gestiona la autenticación (Auth0) y enruta las solicitudes a los servicios correctos en EKS.
 * **Event-Driven (Pub/Sub):** Para comunicaciones asíncronas que no requieren una respuesta inmediata (ej. "Campaña Creada").
     * **Implementación:** Se usará **Amazon SNS**. Por ejemplo, la `CampaignOrchestratorFacade` publicará un evento en un tópico SNS después de crear una campaña, y los dominios de `PromptCrm` o `PromptAds` (Analytics) estarán suscritos a ese tópico.
