@@ -376,7 +376,7 @@ La arquitectura del sistema está diseñada para ser modular, escalable y manten
 
 El siguiente diagrama ilustra los componentes principales, sus interacciones, las tecnologías seleccionadas y las capas de la aplicación.
 
-* **Diagrama de Arquitectura:** [DiagramaArquitectura.pdf](<./DiagramaArquitectura.pdf>)
+* **Diagrama de Arquitectura:** [DiagramaArquitectura.pdf](<./DiagramaArqui11Nov.pdf>)
 
 
 
