@@ -414,8 +414,10 @@ La arquitectura combina varios patrones para lograr los objetivos del proyecto:
 Cada microservicio de dominio sigue una arquitectura de capas limpia, como se muestra en el diagrama:
 
 1.  **Handler Layer (Controladores):**
-    * **Responsabilidad:** Recibir peticiones HTTP/REST, validar DTOs (Data Transfer Objects) y llamar a la capa de servicio. No debe contener lógica de negocio.
+    * **Responsabilidad:** Recibir peticiones HTTP/REST, validar DTOs y llamar a la capa de servicio. No debe contener lógica de negocio.
     * **Seguridad:** Aquí se implementarán los **NestJS Guards** para la validación de tokens JWT (provenientes de Auth0) y la autorización basada en roles.
+        * **Ver Código (Estrategia JWT):** `[jwt.strategy.ts](<./src/common/auth/jwt.strategy.ts>)`
+        * **Ver Código (Guard de Protección):** `[jwt-auth.guard.ts](<./src/common/auth/jwt-auth.guard.ts>)`
 2.  **Service Layer (Servicios):**
     * **Responsabilidad:** Contiene toda la lógica de negocio principal. Orquesta llamadas a la capa de Repositorio (para acceso a BD) o a la Capa de Cliente (para comunicarse con otros dominios).
     * **Código:** [text-content.service.ts](<./src/prompt-content/services/text-content.service.ts>)
