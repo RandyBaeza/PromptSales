@@ -305,20 +305,9 @@ El diagrama de arquitectura de dominios, sus capas (`Contract Layer`, `Modulos`,
 
 * **Diagrama de Dominios y Contratos:** 
 
-[DDD&Contract\_Diagram.pdf](DDD&Contract_Diagram.pdf)
+[DDD&Contract\_Diagram.pdf](DDDnew.pdf)
 
-## 2.2 Identificación de Dominios Principales
 
-El ecosistema se divide en cuatro dominios principales según el diagrama:
-
-* **Common:** Contiene lógica y contratos compartidos por todos los dominios, como la gestión de Servicios (facturación), APIs y Usuarios (autenticación).
-    * **Código Fuente:** [src/common/](<./src/common/>)
-* **PromptContent:** Responsable de toda la generación, adaptación y gestión de contenido creativo (texto, imágenes, video).
-    * **Código Fuente:** [src/prompt-content/](<./src/prompt-content>)
-* **PromptAds:** Gestiona la ejecución de campañas publicitarias, segmentación de audiencias, auto-configuración y análisis de rendimiento.
-    * **Código Fuente:** [src/prompt-ads/](<./src/prompt-ads>)
-* **PromptCrm:** Enfocado en la gestión de leads, bots de comunicación y seguimiento del cliente potencial.
-    * **Código Fuente:** [src/prompt-crm/](<./src/prompt-crm>)
 
 ## Contratos entre Dominios (Interfaces y APIs)
 
