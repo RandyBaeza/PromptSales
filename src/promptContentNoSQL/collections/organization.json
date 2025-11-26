@@ -1,0 +1,49 @@
+{
+  "_id": "org_456",
+  "name": "DigitalMinds Costa Rica",
+  "legalInfo": {
+    "taxId": "310123456789", 
+    "country": "CR",
+    "address": "San José, Escazú"
+  },
+  "subscription": {
+    "tier": "enterprise",
+    "status": "active",
+    "startDate": "2024-01-01",
+    "limits": {
+      "monthlyContent": 500,
+      "aiGenerations": 1000,
+      "teamMembers": 10
+    },
+    "currentUsage": {
+      "contentThisMonth": 45,
+      "generationsThisMonth": 89
+    }
+  },
+  "users": [
+    {
+      "userId": "user_789",
+      "email": "maria@company.com",
+      "role": "content_director",
+      "permissions": ["create_content", "approve_content"],
+      "joinedAt": "2024-02-10T08:30:00Z"
+    }
+  ],
+  "integrations": [
+    {
+      "platform": "instagram",
+      "status": "active",
+      "configurations": {
+        "autoPublish": false,
+        "requireApproval": true
+      },
+      "connectedAt": "2024-02-15T10:00:00Z"
+    }
+  ],
+  "createdAt": "2024-01-01T00:00:00Z",
+  "updatedAt": "2024-03-25T14:00:00Z"
+
+
+
+  
+}

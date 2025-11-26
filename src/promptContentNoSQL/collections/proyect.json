@@ -1,0 +1,37 @@
+{
+  "_id": "proj_123", 
+  "orgId": "org_456",
+  "name": "Campaña Café Artesanal 2024",
+  "description": "Campaña de contenido para lanzamiento de nueva línea de cafés premium",
+  "campaignGoal": "product_launch",
+  "targetAudience": {
+    "ageRange": [25, 55],
+    "interests": ["gourmet", "sustainability", "local_business"],
+    "countries": ["CR", "PA", "NI"],
+    "languages": ["es", "en"]
+  },
+  "brandGuidelines": {
+    "primaryColors": ["#2F4F2F", "#8B4513"],
+    "fonts": ["Montserrat", "Open Sans"],
+    "tone": "sophisticated_authentic"
+  },
+  "timeline": {
+    "startDate": "2024-04-01",
+    "endDate": "2024-06-30",
+    "milestones": [
+      {
+        "name": "Content Creation",
+        "dueDate": "2024-04-15",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "stats": {
+    "totalContent": 15,
+    "approvedContent": 8,
+    "publishedContent": 5
+  },
+  "createdBy": "user_789",
+  "createdAt": "2024-03-15T09:00:00Z",
+  "updatedAt": "2024-03-25T10:30:00Z"
+}

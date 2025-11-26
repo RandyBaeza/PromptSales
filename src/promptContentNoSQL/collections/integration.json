@@ -1,0 +1,27 @@
+{
+  "_id": "integration_789",
+  "orgId": "org_456",
+  "platformId": "platform_insta",
+  "name": "Instagram Business - DigitalMinds",
+  "status": "active",
+  "credentials": {
+    "encrypted": true,
+    "lastRotated": "2024-03-01T00:00:00Z"
+  },
+  "configurations": {
+    "autoPublish": false,
+    "requireApproval": true,
+    "defaultHashtags": ["cafecostarrica", "gourmetcoffee"],
+    "postingSchedule": {
+      "bestTimes": ["08:00", "12:00", "17:00"],
+      "timezone": "America/Costa_Rica"
+    }
+  },
+  "syncStatus": {
+    "lastSync": "2024-03-25T08:30:00Z",
+    "nextSync": "2024-03-25T20:30:00Z",
+    "itemsSynced": 45
+  },
+  "createdAt": "2024-02-15T10:00:00Z",
+  "updatedAt": "2024-03-25T08:30:00Z"
+}
