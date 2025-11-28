@@ -406,29 +406,7 @@ def create_database_and_collections():
         
 
         
-        # ============================================
-        # 11. COLECCIÓN: PCFeatures
-        # ============================================
-        try:
-            db.create_collection("PCFeatures", validator={
-                "$jsonSchema": {
-                    "bsonType": "object",
-                    "required": ["featureId","name"],
-                    "properties": {
-                        "featureId": {"bsonType": "string"},
-                        "name": {"bsonType": "string"},
-                        "description": {"bsonType": "string"},
-                        "createdAt": {"bsonType": "date"}
-                    }
-                }
-            })
-            print("Colección 'PCFeatures' creada")
-        except CollectionInvalid:
-            print("Colección 'PCFeatures' ya existe")
-        
-        # ÍNDICES
-        db.PCFeatures.create_index([("featureId", ASCENDING)], unique=True)
-        print("  → Índices creados para 'PCFeatures'")
+      
         
     
       
@@ -458,4 +436,5 @@ if 1 == 1:
     print("CREACIÓN DE BASE DE DATOS - PROMPTCONTENT")
     print("=" * 60)
     create_database_and_collections()
+
     print("\n¡Script completado exitosamente!")
