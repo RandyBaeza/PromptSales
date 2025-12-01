@@ -441,3 +441,47 @@ El flujo más crítico es la orquestación de campañas. El siguiente diagrama d
 | **CI/CD** | GitHub Actions | N/A | Plataforma de CI/CD para construir imágenes Docker y desplegar en EKS/Vercel. |
 
 El **control de versiones** del código se gestionará mediante **GitFlow** (branches `main`, `develop`, `feature/`, `hotfix/`) y las versiones de la aplicación seguirán el **Versionamiento Semántico (SemVer)** (ej. `v1.0.0`).
+
+## REPOSITORIO CON CACHÉ
+
+### 3.1 Estructura de Clases 
+
+
+Application/
+├── Domain/                          # Contratos DDD
+│   └── ICampaignRepository.cs       # Interfaz del dominio
+│
+├── Infrastructure/                  # Implementaciones
+│   ├── Repositories/
+│   │   ├── Base/                    # Clases base OBLIGATORIAS
+│   │   │   ├── CachedRepositoryBase.cs
+│   │   │   └── RepositoryBase.cs
+│   │   │
+│   │   └── CampaignRepositorySP.cs  # Tu implementación específica
+│   │
+│   └── Caching/                     # Servicios de caché
+│       ├── ICacheService.cs
+│       └── RedisCacheService.cs
+│
+└── DI/                              # Configuración de inyección
+    └── ServiceExtensions.cs
+
+
+### 3.2 Clase Base OBLIGATORIA: CachedRepositoryBase
+#### Ubivación: Infrastructure/Repositories/Base/CachedRepositoryBase.cs
+
+
+### 2. IMPLEMENTACIÓN DE REPOSITORIO 
+Ubicación: Infrastructure/Repositories/CampaignRepositorySP.cs
+
+
+### 3. CONFIGURACIÓN DE INYECCIÓN DE DEPENDENCIAS 
+
+### 4.INTERFACES Y CONTRATOS 
+
+#### 4.1  Interfaz del Servicio de Caché
+
+#### 4.2  Interfaz del Factory de Conexiones
+
+
+
