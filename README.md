@@ -442,6 +442,50 @@ El flujo más crítico es la orquestación de campañas. El siguiente diagrama d
 
 El **control de versiones** del código se gestionará mediante **GitFlow** (branches `main`, `develop`, `feature/`, `hotfix/`) y las versiones de la aplicación seguirán el **Versionamiento Semántico (SemVer)** (ej. `v1.0.0`).
 
+
+#Bases de datos
+
+## 1 Tecnologias
+
+## 2 Diagrama relacional
+
+## 3 Diagrama no relacional
+
+
+
+## 4 REPOSITORIOS CON STORED PROCEDURES
+
+### 4.1 PATRÓN DE REPOSITORIO SP
+
+Application/
+├── Domain/                          # Contratos DDD
+│   ├── Entities/
+│   │   └── Campaign.cs              # Entidad del dominio
+│   └── Repositories/
+│       └── ICampaignRepository.cs   # Interfaz del dominio
+│
+├── Infrastructure/
+│   └── Repositories/
+│       ├── Base/                    # Clases base OBLIGATORIAS
+│       │   ├── RepositoryBaseSP.cs
+│       │   └── ISqlConnectionFactory.cs
+│       │
+│       └── CampaignRepositorySP.cs  
+│
+└── DI/
+    └── RepositoryServiceExtensions.cs
+
+### 4.2 IMPLEMENTACIÓN BASE OBLIGATORIA
+
+### 4.3 Repositorio
+ - Ubicación: Infrastructure/Repositories/CampaignRepositorySP.cs
+
+### 4.4 FACTORY DE CONEXIONES
+
+#### 4.4.1 Interfaz e Implementación
+
+#### 4.5 CONFIGURACIÓN DE INYECCIÓN DE DEPENDENCIAS
+
 ## REPOSITORIO CON CACHÉ
 
 ### 3.1 Estructura de Clases 
