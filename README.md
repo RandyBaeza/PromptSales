@@ -465,7 +465,11 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
  
  ## Diseñar al menos una base de datos relacional.
- - Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
+
+ * **Diagrama de Arquitectura:** [DiagramaRelacional.pdf](<./PromptAdsRelacional.pdf>)
+
+ 
+ ##- Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
 - Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
