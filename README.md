@@ -520,21 +520,21 @@ src/
 
 #### Repository with Stored Procedures
 
-src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts
 
+  ```ts
   * [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
-
+```
   
 
   * Stored procedure get:
-    ![get campaign](./src/promptAdsSQL/getCampaignSP.sql)
+    [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
     ![screenshotGet](./images/sp1Lectura.png)
     
    Stored procedure post:
-    ![post campaign](./src/promptAdsSQL/save_campaignSP.sql)
+    [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
     
- ![screenshotPost](./images/sp1Escritura.png)
+   ![screenshotPost](./images/sp1Escritura.png)
 
  
 
