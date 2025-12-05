@@ -547,17 +547,29 @@ REPOSITORY_STRATEGY=sp    <------
   ```
 
   [development](src/prompt-sales-backend/.env.development)
-  
-  * [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
+  ---
+  * Interfaz del Repository
+  [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
+  ---
+   * Repository con Stored Procedures
+   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
+
+---
+* Repository en el Service
+  
+   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.service.ts)
+  ---
+  
   
 
-  * Stored procedure get:
+  * Stored Procedure GET en PostgreSQL:
     [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
     ![screenshotGet](./images/sp1Lectura.png)
+---
     
-   Stored procedure post:
+   * Stored procedure POST:
     [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
     
    ![screenshotPost](./images/sp1Escritura.png)
@@ -567,6 +579,32 @@ REPOSITORY_STRATEGY=sp    <------
 
 
 ### 2. **Repository Layer con ORM**
+
+- Repository strategy: orm
+```text
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=Discoelysiumbaby_25
+DB_NAME=postgres
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD= 
+REDIS_DB=0
+
+
+# Application Configuration
+NODE_ENV=development
+PORT=3000
+REPOSITORY_STRATEGY=orm    <------
+
+  ```
+
+  [development](src/prompt-sales-backend/.env.development)
 
   * [campaign.orm.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.orm.repository.ts)
 
@@ -582,8 +620,38 @@ REPOSITORY_STRATEGY=sp    <------
 
 
   ### 3. **Caché**
+
+  - Repository strategy: orm
+```text
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=Discoelysiumbaby_25
+DB_NAME=postgres
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD= 
+REDIS_DB=0
+
+
+# Application Configuration
+NODE_ENV=development
+PORT=3000
+REPOSITORY_STRATEGY=cache    <------
+
+  ```
+
+  [development](src/prompt-sales-backend/.env.development)
+
+  ---
+  #### Repositorio de cache:
  ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
 
+----
 
    ![cacheEscritura](./images/CacheEscritura.png)
 
