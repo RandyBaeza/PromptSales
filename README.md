@@ -480,10 +480,12 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
   * [Mongo Script](./src/promptContentNoSQL/MongoFinalContent.py)
 
-    
-## Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
+    ## Proyecto Oscar
+- Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
 - Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
+
+  ## Diagrama pipeline
 - Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
 
 
