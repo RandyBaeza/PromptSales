@@ -546,10 +546,10 @@ src/
 
   
 
-   ![ormEscritura](./images/ormEscritura1.png)
+   ![ormEscritura](./images/orm1escritura.png)
 
  
-   ![ormLecturat](./images/ormLectura1.png)
+   ![ormLecturat](./images/orm1lectura.png)
 
 
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
