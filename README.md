@@ -486,9 +486,9 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 ###  **Proyect structure**
 
-[structure](./src/prompt-ads-backend/structure.txt)
+[structure](./src/prompt-sales-backend/structure.txt)
 
-
+src/prompt-sales-backend/structure.txt
 
 ### 1. **Repository Layer con Stored Procedures**
 
