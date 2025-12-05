@@ -486,42 +486,8 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 ###  **Proyect structure**
 
+[structure](./src/prompt-ads-backend/structure.txt)
 
-src/
-├── modules/
-│ └── campaigns/
-│ ├── campaign.controller.ts # Endpoints REST
-│ ├── campaign.service.ts # Lógica de negocio
-│ ├── campaign.module.ts # Configuración del módulo
-│ ├── entities/
-│ │ └── campaign.entity.ts # Entidad TypeORM
-│ ├── dto/
-│ │ ├── create-campaign.dto.ts # Validación entrada
-│ │ └── update-campaign.dto.ts
-│ └── repositories/ 
-│ ├── campaign.orm.repository.ts # ORM Implementation
-│ ├── campaign.sp.repository.ts # Stored Procedures
-│ ├── campaign.cached.repository.ts # Cache + ORM
-│ └── interfaces/
-│ └── campaign-repository.interface.ts
-│
-├── common/
-│ ├── database/
-│ │ ├── migrations/ # Scripts de BD
-│ │ └── stored-procedures/ # SPs organizados
-│ └── cache/
-│ └── cache-manager.factory.ts # Patrón Factory para Cache
-│
-test/
-├── integration/
-│ └── api/campaign/
-│ ├── campaigns.get.spec.ts
-│ ├── campaigns.post.spec.ts
-│ └── security/
-│ └── campaigns.delete.security.spec.ts
-└── unit/
-└── services/
-└── campaign.service.spec.ts
 
 
 ### 1. **Repository Layer con Stored Procedures**
