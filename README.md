@@ -466,7 +466,9 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
  
  ## Diseñar al menos una base de datos relacional.
 
- ![SQL Screenshot](images/ScreenshotSql.png)
+ 
+ ![Screenshot of SQL](./images/ScreenshotSql.png)
+
 
  * **SQL DataBase:** [PromptAds.pdf](<./PromptAdsRelacional.pdf>)
 
