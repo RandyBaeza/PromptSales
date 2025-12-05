@@ -558,10 +558,11 @@ REPOSITORY_STRATEGY=sp    <------
 ---
 * Repository en el Service
   
-   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.service.ts)
+   [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
   ---
   
-  
+  campaign.service.ts
+src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts
 
   * Stored Procedure GET en PostgreSQL:
     [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
