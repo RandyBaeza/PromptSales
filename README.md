@@ -556,6 +556,7 @@ src/
 
 
   ### 3. **Caché**
+ ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
 
 
    ![cacheEscritura](./images/CacheEscritura.png)
