@@ -520,7 +520,33 @@ src/
 
 #### Repository with Stored Procedures
 
+### Env.development
 
+- Repository strategy: sp
+```text
+
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=postgres
+DB_PASSWORD=Discoelysiumbaby_25
+DB_NAME=postgres
+
+# Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD= 
+REDIS_DB=0
+
+
+# Application Configuration
+NODE_ENV=development
+PORT=3000
+REPOSITORY_STRATEGY=sp    <------
+
+  ```
+
+  [development](src/prompt-sales-backend/.env.development)
   
   * [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
