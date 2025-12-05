@@ -526,8 +526,11 @@ src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.reposito
 
   
 
-  * Stored procedure: get campaign](./src/promptAdsSQL/getCampaignSP.sql)
-  * Stored procedure: post campaign](./src/promptAdsSQL/save_campaignSP.sql)
+  * Stored procedure get:
+    [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
+    
+  * Stored procedure post:
+    [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
 
 
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
