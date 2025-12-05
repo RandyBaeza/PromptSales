@@ -520,7 +520,9 @@ src/
 
 #### Repository with Stored Procedures
 
+src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts
 
+  * [campaign.sp.repository](.src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
