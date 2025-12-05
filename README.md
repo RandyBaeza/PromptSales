@@ -527,14 +527,14 @@ src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.reposito
   
 
   * Stored procedure get:
- *   [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
+    ![get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
-    * [screenshotGet](./images/sp1Lectura.png)
+    ![screenshotGet](./images/sp1Lectura.png)
     
-  * Stored procedure post:
-   * [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
+   Stored procedure post:
+    ![post campaign](./src/promptAdsSQL/save_campaignSP.sql)
     
-* [screenshotPost](./images/sp1Escritura.png)
+ ![screenshotPost](./images/sp1Escritura.png)
 
  
 
