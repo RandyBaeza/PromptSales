@@ -524,6 +524,12 @@ src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.reposito
 
   * [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
+  
+
+  * Stored procedure: get campaign](./src/promptAdsSQL/getCampaignSP.sql)
+  * Stored procedure: post campaign](./src/promptAdsSQL/save_campaignSP.sql)
+
+
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
 - Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
