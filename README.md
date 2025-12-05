@@ -472,6 +472,9 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
  * **SQL DataBase:** [PromptAds.pdf](<./PromptAdsRelacional.pdf>)
 
+ [SQL Script](./src/promptAdsSQL/promptAdsSQLScript.sql)
+
+
  
  ##- Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
