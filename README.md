@@ -472,12 +472,16 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
  * **SQL DataBase:** [PromptAds.pdf](<./PromptAdsRelacional.pdf>)
 
- [SQL Script](./src/promptAdsSQL/promptAdsSQLScript.sql)
+ * [SQL Script](./src/promptAdsSQL/promptAdsSQLScript.sql)
 
 
  
- ##- Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
-- Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
+ ## Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
+
+  * [Mongo Script](./src/promptContentNoSQL/MongoFinalContent.py)
+
+    
+## Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
 - Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
 - Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
