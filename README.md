@@ -466,7 +466,9 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
  
  ## Diseñar al menos una base de datos relacional.
 
- * **Diagrama de Arquitectura:** [DiagramaRelacional.pdf](<./PromptAdsRelacional.pdf>)
+ ![SQL Screenshot](images/ScreenshotSql.png)
+
+ * **SQL DataBase:** [PromptAds.pdf](<./PromptAdsRelacional.pdf>)
 
  
  ##- Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
