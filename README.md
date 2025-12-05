@@ -1,4 +1,4 @@
-# 1. Métricas de los Requerimientos No Funcionales1
+# 1. Métricas de los Requerimientos No Funcionales
 
 ## 1.1 Performance
 
@@ -467,7 +467,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
  ## Diseñar al menos una base de datos relacional.
 
  
- ![Screenshot of SQL](./images/ScreenshotSql.png)
+  ![SQL Screenshot](images/scrrenshotSQL.png)
 
 
  * **SQL DataBase:** [PromptAds.pdf](<./PromptAdsRelacional.pdf>)
