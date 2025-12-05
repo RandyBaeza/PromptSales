@@ -449,22 +449,22 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 ##  Diseño de base de datos
  - Definir motores de base de datos para cada sistema, incluyendo elección de bases relacionales y al menos una que a su criterio puede ser no relacional.
-- ### Prompt Ads
+ ### Prompt Ads
 
- PostgreSQL como motor principal.
+  - **PostgreSQL** como motor principal.
 
-### Prompt CRM
+  ### Prompt CRM
 
-- Amazon Redshift,  para análisis de grandes volúmenes de datos y cargas intensivas de lectura.
+- **Amazon Redshift**,  para análisis de grandes volúmenes de datos y cargas intensivas de lectura.
 
-- PostgreSQL, para la operación transaccional diaria del CRM.
+- **PostgreSQL**, para la operación transaccional diaria del CRM.
 
-### Prompt Content
+  ### Prompt Content
 
 - MongoDB. 
 
  
- - Diseñar al menos una base de datos relacional.
+ ## Diseñar al menos una base de datos relacional.
  - Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
 - Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
 - Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
