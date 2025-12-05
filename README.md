@@ -527,5 +527,41 @@ Ubicación: Infrastructure/Repositories/CampaignRepositorySP.cs
 
 #### 4.2  Interfaz del Factory de Conexiones
 
+# Entregable 3 final - 25%
 
+## Diseño de base de datos
+### Definir motores de base de datos para cada sistema, incluyendo elección de bases relacionales y al menos una que a su criterio puede ser no relacional.
+### Diseñar al menos una base de datos relacional.
+### Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
+### Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
+### Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
+### Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
+### Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
+
+
+## Diseño de MCP servers
+Dado que la base de datos de PromptSales es usada para:
+
+Registrar toda la información que se procesa en el portal web centralizado.
+Almacena información resumida de efectividad de campañas para consultas rápidas, información que viene de los otros sistemas
+Guarda información general de integración de las AI
+Diseñe e implemente un MCP server que permita realizar consultas en lenguaje natural sobre el rendimiento de las compañas, las ventas logradas, el alcance, los canales usados, la geografía usada y cualquier otra información que la AI pueda obtener.
+
+Documentar pautas de creación de MCP servers: ubicación de configuración, reglas, código de implementación, tools, resources y prompts.
+
+Diseñar MCP servers valiosos para todo el sistema y diagramar la interacción entre ellos. Solo se diseñan por diagrama, no se implementan todos, solo el solicitado arriba.
+
+## Deployment
+Indicar la tecnologia, archivos y scripts que se van a utilizar para hacer el deployment en cloud, así como también para el CI CD, debidamente vinculado a código.
+Indicar y guiar como se va a dar mantenimiento y deploy de los migrations de bases de datos
+Crear github actions básicos que al hacer push al branch principal de deployment se ejecute alguna operación o regla básica, esto para entrenar levemente el uso de estos actions en los procesos de deployment.
+Testability
+Documentar y guiar el cómo se harían los siguientes tipos de pruebas, y a la vez implementar, ejecutar y documentar resultados de pruebas ejemplo que deben quedar en el source code y debidamente configuradas para su ejecución. Se sugiere fuertemente que investigue la batería de servicios de diseño, mantenimiento, ejecución, actualización de QA soportada por AI, esto para que su diseño de pruebas se haga con prácticas recientes y herramientas con capacidades de AI:
+
+## Unit testing de al menos una clase.
+### Test de REST API, de una operación de lectura y otra de escritura.
+### Test de seguridad, validar permisos grant y rechazo de accesos a algún método del API.
+### Test de stress, con cierta cantidad aceptable para una sola computadora ejecutando el test y otra computadora mínimo soportando la infraestructura.
+### Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
+### Linter de código, su configuración y uso dentro de la solución.
 
