@@ -486,7 +486,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 ###  **Proyect structure**
 
-[structure](./src/prompt-sales-backend/structure.txt)
+
 
 ```text
 src/
@@ -514,6 +514,8 @@ src/
 │   └── cache/
 │       └── cache-manager.factory.ts         # Patrón Factory para Cache
 
+
+```
 ### 1. **Repository Layer con Stored Procedures**
 
 
