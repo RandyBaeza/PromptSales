@@ -443,100 +443,18 @@ El flujo más crítico es la orquestación de campañas. El siguiente diagrama d
 El **control de versiones** del código se gestionará mediante **GitFlow** (branches `main`, `develop`, `feature/`, `hotfix/`) y las versiones de la aplicación seguirán el **Versionamiento Semántico (SemVer)** (ej. `v1.0.0`).
 
 
-#Bases de datos
 
-## 1 Tecnologias
-
-## 2 Diagrama relacional
-
-## 3 Diagrama no relacional
-
-
-
-## 4 REPOSITORIOS CON STORED PROCEDURES
-
-### 4.1 PATRÓN DE REPOSITORIO SP
-
-Application/
-├── Domain/                          # Contratos DDD
-│   ├── Entities/
-│   │   └── Campaign.cs              # Entidad del dominio
-│   └── Repositories/
-│       └── ICampaignRepository.cs   # Interfaz del dominio
-│
-├── Infrastructure/
-│   └── Repositories/
-│       ├── Base/                    # Clases base OBLIGATORIAS
-│       │   ├── RepositoryBaseSP.cs
-│       │   └── ISqlConnectionFactory.cs
-│       │
-│       └── CampaignRepositorySP.cs  
-│
-└── DI/
-    └── RepositoryServiceExtensions.cs
-
-### 4.2 IMPLEMENTACIÓN BASE OBLIGATORIA
-
-### 4.3 Repositorio
- - Ubicación: Infrastructure/Repositories/CampaignRepositorySP.cs
-
-### 4.4 FACTORY DE CONEXIONES
-
-#### 4.4.1 Interfaz e Implementación
-
-#### 4.5 CONFIGURACIÓN DE INYECCIÓN DE DEPENDENCIAS
-
-## REPOSITORIO CON CACHÉ
-
-### 3.1 Estructura de Clases 
-
-
-Application/
-├── Domain/                          # Contratos DDD
-│   └── ICampaignRepository.cs       # Interfaz del dominio
-│
-├── Infrastructure/                  # Implementaciones
-│   ├── Repositories/
-│   │   ├── Base/                    # Clases base OBLIGATORIAS
-│   │   │   ├── CachedRepositoryBase.cs
-│   │   │   └── RepositoryBase.cs
-│   │   │
-│   │   └── CampaignRepositorySP.cs  # Tu implementación específica
-│   │
-│   └── Caching/                     # Servicios de caché
-│       ├── ICacheService.cs
-│       └── RedisCacheService.cs
-│
-└── DI/                              # Configuración de inyección
-    └── ServiceExtensions.cs
-
-
-### 3.2 Clase Base OBLIGATORIA: CachedRepositoryBase
-#### Ubivación: Infrastructure/Repositories/Base/CachedRepositoryBase.cs
-
-
-### 2. IMPLEMENTACIÓN DE REPOSITORIO 
-Ubicación: Infrastructure/Repositories/CampaignRepositorySP.cs
-
-
-### 3. CONFIGURACIÓN DE INYECCIÓN DE DEPENDENCIAS 
-
-### 4.INTERFACES Y CONTRATOS 
-
-#### 4.1  Interfaz del Servicio de Caché
-
-#### 4.2  Interfaz del Factory de Conexiones
 
 # Entregable 3 final - 25%
 
-## Diseño de base de datos
-### Definir motores de base de datos para cada sistema, incluyendo elección de bases relacionales y al menos una que a su criterio puede ser no relacional.
-### Diseñar al menos una base de datos relacional.
-### Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
-### Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
-### Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
-### Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
-### Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
+##  Diseño de base de datos
+ - Definir motores de base de datos para cada sistema, incluyendo elección de bases relacionales y al menos una que a su criterio puede ser no relacional.
+ - Diseñar al menos una base de datos relacional.
+ - Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
+- Implementar y probar un ejemplo de repository layer usando stored procedures, incluyendo operación de escritura y otra de lectura.
+- Implementar y probar un ejemplo de repository layer usando ORM, incluyendo operación de escritura y otra de lectura.
+- Agregar las previstas de cache y connection pool correspondientes en los repositories implementados.
+- Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
 
 
 ## Diseño de MCP servers
@@ -559,9 +477,9 @@ Testability
 Documentar y guiar el cómo se harían los siguientes tipos de pruebas, y a la vez implementar, ejecutar y documentar resultados de pruebas ejemplo que deben quedar en el source code y debidamente configuradas para su ejecución. Se sugiere fuertemente que investigue la batería de servicios de diseño, mantenimiento, ejecución, actualización de QA soportada por AI, esto para que su diseño de pruebas se haga con prácticas recientes y herramientas con capacidades de AI:
 
 ## Unit testing de al menos una clase.
-### Test de REST API, de una operación de lectura y otra de escritura.
-### Test de seguridad, validar permisos grant y rechazo de accesos a algún método del API.
-### Test de stress, con cierta cantidad aceptable para una sola computadora ejecutando el test y otra computadora mínimo soportando la infraestructura.
-### Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
-### Linter de código, su configuración y uso dentro de la solución.
+- Test de REST API, de una operación de lectura y otra de escritura.
+- Test de seguridad, validar permisos grant y rechazo de accesos a algún método del API.
+- Test de stress, con cierta cantidad aceptable para una sola computadora ejecutando el test y otra computadora mínimo soportando la infraestructura.
+- Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
+- Linter de código, su configuración y uso dentro de la solución.
 
