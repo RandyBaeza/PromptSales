@@ -510,7 +510,7 @@ src/
 
   ---
   
-  ##  **Stored Procedures*
+  ##  **Stored Procedures**
   ---
   #### 1 Campaign.sp.repository.ts:
   -  Implementación concreta de la interfaz del repositorio que usa Stored Procedures de PostgreSQL para todas las operaciones de base de datos. 
@@ -779,12 +779,7 @@ Para conectar los servidores desde un MCP Client, el URL y credenciales para con
 
 ---
 
-## Unit testing de al menos una clase.
-- Test de REST API, de una operación de lectura y otra de escritura.
-- Test de seguridad, validar permisos grant y rechazo de accesos a algún método del API.
-- Test de stress, con cierta cantidad aceptable para una sola computadora ejecutando el test y otra computadora mínimo soportando la infraestructura.
-- Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
-- Linter de código, su configuración y uso dentro de la solución.
+
 
 
 # 3.4 Testing
