@@ -903,11 +903,48 @@ it('should return 409 Conflict when name already exists', async () => { /* ... *
 
  ![campaigns.post.spec.ts](./images/testExitosoEscritura.png)
 
+```typescript
 
+```
 
 ## Test seguridad
 
+### Pruebas de Validación de Roles
+
+#### A. Pruebas de Autorización (GRANT/REJECT)
+```typescript
+// Verifica si se concede o rechaza acceso según el rol
+describe('GRANT Access Tests', () => {
+  it('should GRANT access when user has admin role', async () => { /* ... */ });
+});
+
+describe('REJECT Access Tests', () => {
+  it('should REJECT access when user has user role', async () => { /* ... */ });
+});
+```
+
+#### B.Pruebas de Validación de Roles
+
+```typescript
+// Verifica diferentes variaciones de roles
+it('should handle case insensitive roles', async () => { /* ... */ });
+it('should reject empty role', async () => { /* ... */ });
+```
+#### C. Pruebas de Manejo de Errores Seguro
+```typescript
+// Verifica que errores no expongan información sensible
+it('should not expose internal errors', async () => { /* ... */ });
+```
+
+###  Análisis de Pruebas Existentes
+
+[campaigns.post.spec.ts](src/prompt-sales-backend/test/integration/api/campaign/campaigns.delete.security.spec.ts)
 
 
+### Resultados
+
+ ![seguridad1](./images/testSeguridad.png)
+
+  ![seguridad1](./images/testSeguridad2.png)
 
 
