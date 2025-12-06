@@ -758,10 +758,9 @@ REPOSITORY_BASE_STRATEGY=orm # <------
 
    ![ormLectura](./images/cacheOrmLectura.png)
 
-   ----
+   
 
-  ## Diagrama pipeline
-- Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
+
 
 ---
 
