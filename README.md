@@ -865,7 +865,7 @@ Configura Jest para pruebas End-to-End (E2E).
 
 ### jest-e2e.json
 
-[jest.json](src/prompt-sales-backend/test/jest-e2e.jsont)
+[jest.json](src/prompt-sales-backend/test/jest-e2e.json)
 
 ---
   
