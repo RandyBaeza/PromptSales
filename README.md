@@ -448,7 +448,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 # Entregable 3 final - 25%
 
 ##  Diseño de base de datos
- - Definir motores de base de datos para cada sistema, incluyendo elección de bases relacionales y al menos una que a su criterio puede ser no relacional.
+
  ### Prompt Ads
 
   - **PostgreSQL** como motor principal.
@@ -464,7 +464,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 - MongoDB. 
 
  
- ## Diseñar al menos una base de datos relacional.
+ ## Nase de datos relacional.
 
  
   ![SQL Screenshot](images/scrrenshotSQL.png)
@@ -476,7 +476,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 
  
- ## Diseñar una base de datos no relacional con ejemplos ya sea en JSON o schemas en código.
+ ## Base de datos no relacional.
 
   * [Mongo Script](./src/promptContentNoSQL/MongoFinalContent.py)
 
@@ -484,7 +484,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 ## Repository Layer Implementation
 
-###  **Proyect structure**
+###  **Estructura**
 
 
 
