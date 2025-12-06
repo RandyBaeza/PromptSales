@@ -813,6 +813,9 @@ En pushes al main branch, GitHub Actions llama al workflow cd-dev.yml para el de
 
 ### 3.3.3 Ambiente local manual:
 En los repositorios locales clonados se cuentan con los siguientes archivos en scipts/ para controlar el deployment:
+
+[scripts](scripts)
+
 - setup.bat instala dependencias y prepara el ambiente.
 - start-dev.bat levanta el ambiente.
 - stop.bat baja el ambiente.
