@@ -523,6 +523,8 @@ src/
   #### 1 Interfaz del Repository
   
   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
+
+  
   ---
   * 2# Repository con Stored Procedures
    [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
@@ -531,7 +533,9 @@ src/
 * 3# Repository en el Service
   
    [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+
   ---
+  
   * 4# Stored Procedure GET en PostgreSQL:
     
   [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
@@ -548,6 +552,7 @@ src/
 * 5# Repository en el Service
   
    [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+
   ---
 * 6# Env.development
 
@@ -591,12 +596,15 @@ npm run start:dev
 
 ![screenshotGet](./images/sp1Lectura.png)
 
+ [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
+
   ---
 
  ** POST http://localhost:3000/api/campaigns**
  
   ![screenshotPost](./images/sp1Escritura.png)
 
+   [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
 
 ### 2. **Repository Layer con ORM**
 
@@ -645,16 +653,17 @@ REPOSITORY_STRATEGY=orm    <------
   ** GET http://localhost:3000/api/campaigns**
  ![ormLecturat](./images/orm1lectura.png)
 
+ [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
 
+ 
 ---
 
 ** POST http://localhost:3000/api/campaigns**
    ![ormEscritura](./images/orm1escritura.png)
  
   
-  [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
-
-   [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
+ 
+   [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
   ### 3. **Caché**
 
 #### 1# Instalar Redis (CACHE MANAGER)
