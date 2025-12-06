@@ -799,6 +799,43 @@ Para conectar los servidores desde un MCP Client, el URL y credenciales para con
 
 ## 3.3 Deployment
 
+Se usará GitHub Actions para la ejecución de todos los workflows de CI/CD y scripts en batch para los clones locales.
+
+### 3.3.1 Deployment to AWS
+
+En puches al main branch, GitHub Actions llama al workflow cd.yml para el deployment automático del sistema a AWS.
+
+### 3.3.2 Developer Environment
+
+En pushes al main branch, GitHub Actions llama al workflow cd-dev.yml para el deployment automático del sistema al ambiente de desarrollo.
+
+
+### 3.3.3 Ambiente local manual:
+En los repositorios locales clonados se cuentan con los siguientes archivos en scipts/ para controlar el deployment:
+- setup.bat instala dependencias y prepara el ambiente.
+- start-dev.bat levanta el ambiente.
+- stop.bat baja el ambiente.
+- run-migrations.bat efectúa las migraciones.
+- local rollback.bat deshace la última migración.
+
+### 3.3.4 Pull Requests
+
+En los pull requests hacia development y main branches, GitHub Actions lama a pci-pr.yml para ejecutar tests de CI.
+
+
+### 3.3.5 Branching
+
+Cuando se crean branches, GitHub Action llama a on-branch-create.yml para validar que el nombre del branch calce con el versionamiento.
+
+
+### 3.3.6 Migrations
+
+Los migration se realizan por medio de TypeORM.
+
+Producción y Development: En los workflows cd.yml y cd-dev.yml, GitHub llama a k8s/migration-job.yml durante el deployment para ejecutar la migración en los servicios de AWS.
+
+Para el migration en clones locales, se debe ejecutar manualmente el archivo scripts/run-migrations.bat.
+
 ---
 
 
