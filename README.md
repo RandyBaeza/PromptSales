@@ -978,6 +978,6 @@ npm run lint  # Fix ESLint issues
 
 ### Resultados
 
-images/linter.png
+
 
  ![linter1](./images/linter.png)
