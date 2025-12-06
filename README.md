@@ -933,7 +933,7 @@ npm run test:unit
 
 ---    
 ## 3.4.3 API REST
-*verifican que los endpoints HTTP funcionen correctamente.
+* verifican que los endpoints HTTP funcionen correctamente.
 
 
 ###  Pruebas Implementadas
