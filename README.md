@@ -532,7 +532,7 @@ src/
 ---
 * 3# Repository en el Service
   
-   [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+   [campaign.sp.repository](src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
 
   ---
   
