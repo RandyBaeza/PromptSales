@@ -824,7 +824,7 @@ En los repositorios locales clonados se cuentan con los siguientes archivos en s
 
 ### 3.3.4 Pull Requests
 
-En los pull requests hacia development y main branches, GitHub Actions lama a pci-pr.yml para ejecutar tests de CI.
+En los pull requests hacia development y main branches, GitHub Actions llama a pci-pr.yml para ejecutar tests de CI.
 
 
 ### 3.3.5 Branching
