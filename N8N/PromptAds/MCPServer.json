@@ -1,0 +1,70 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "967f3bb8-262b-4e31-bd1f-be9185037d50"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fcd1f5ae-1787-47ec-a761-5d0309beaaa7",
+      "name": "MCP Server Trigger",
+      "webhookId": "967f3bb8-262b-4e31-bd1f-be9185037d50",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "This tool provides read-only access to data about marketing campaigns from the PromptAds database.\n\nImportant steps:\n1. When a user asks a question that may be used with this tool, formulate the appropriate parameters for the SQL query.\n2. You may use any number of the parameters of this tool to shorten your search. All parameters default to null to disable their effect if not used.\n3. If a parameter was used based on a user specification, but no relevant data was found, you may consider choosing calling again this tool with less or les specific parameters.\n\nImportant information:\n- Each campaign may be assigned to one organization.\n- Many campaigns may be assigned to the same organization.\n- Campaigns have a name, creation date, last updated date and ending date.\n- Organizations have a name, legal name, contact email and creation date\n\nRequirements when setting parameters:\n- Dates MUST be in YYYY-MM-DD format.\n- Both strings and date parameters MUST be surrounded by apostrophes when not null to be parsed on SQL.",
+        "operation": "executeQuery",
+        "query": "SELECT * FROM\n(\n\tSELECT\n\t\t\"PACampaigns\".name as campaign_name,\n\t\t\"PACampaigns\".description as campaign_description,\n\t\t\"PACampaigns\".created_at as campaign_creation_date,\n\t\t\"PACampaigns\".updated_at as campaign_updation_date,\n\t\t\"PACampaigns\".ends_at as campaign_ending_date,\n\n\t\t\"PAOrganizations\".name as organization_name,\n\t\t\"PAOrganizations\".legal_name as organization_legal_name,\n\t\t\"PAOrganizations\".email as organization_email,\n\t\t\"PAOrganizations\".created_at as organization_creation_date\n\tFROM (\"PACampaigns\" JOIN \"PAOrganizations\"\n\t\tON \"PACampaigns\".id_organization = \"PAOrganizations\".id_organization)\n\tWHERE\n\t\t\"PACampaigns\".deleted = 'false'\n)\nWHERE\n\t(campaign_name ILIKE '%'|| {{ $fromAI('campaignName', 'Select campaigns whose name contains this substring.', 'string', null) }} ||'%' OR {{ $fromAI('campaignName', 'Select campaigns whose name contains this substring.', 'string', null) }} IS NULL)\n\tAND (campaign_creation_date <= {{ $fromAI('campaignCreationDateStart', 'Select campaigns created on this date or newer. Date in YYYY-MM-DD format. May be used along with campaignCreationDateEnd to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignCreationDateStart', 'Select campaigns created on this date or newer. Date in YYYY-MM-DD format. May be used along with campaignCreationDateEnd to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (campaign_creation_date >= {{ $fromAI('campaignCreationDateEnd', 'Select campaigns created on this date or older. Date in YYYY-MM-DD format.  May be used along with campaignCreationDateStart to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignCreationDateEnd', 'Select campaigns created on this date or older. Date in YYYY-MM-DD format.  May be used along with campaignCreationDateStart to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (campaign_updation_date <= {{ $fromAI('campaignUpdationDateStart', 'Select campaigns last updated on this date or newer. Date in YYYY-MM-DD. May be used along with campaignUpdationDateEnd to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignUpdationDateStart', 'Select campaigns last updated on this date or newer. Date in YYYY-MM-DD. May be used along with campaignUpdationDateEnd to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (campaign_updation_date >= {{ $fromAI('campaignUpdationDateEnd', 'Select campaigns last updated on this date or older. Date in YYYY-MM-DD. May be used along with campaignUpdationDateStart to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignUpdationDateEnd', 'Select campaigns last updated on this date or older. Date in YYYY-MM-DD. May be used along with campaignUpdationDateStart to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (campaign_ending_date <= {{ $fromAI('campaignEndingDateStart', 'Select campaigns set to end on this date or newer. Date in YYYY-MM-DD. May be used along with campaignEndingDateEnd to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignEndingDateStart', 'Select campaigns set to end on this date or newer. Date in YYYY-MM-DD. May be used along with campaignEndingDateEnd to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (campaign_ending_date >= {{ $fromAI('campaignEndingDateEnd', 'Select campaigns set to end on this date or older. Date in YYYY-MM-DD. May be used along with campaignEndingDateStart to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('campaignEndingDateEnd', 'Select campaigns set to end on this date or older. Date in YYYY-MM-DD. May be used along with campaignEndingDateStart to limit dates to a range.', 'string', 'null') }} IS NULL)\n\n\tAND (organization_name ILIKE '%'|| {{ $fromAI('organizationNameLike', 'Select campaigns belonging to an organization whose name contains this substring.', 'string', 'null') }} ||'%' OR {{ $fromAI('organizationNameLike', 'Select campaigns belonging to an organization whose name contains this substring.', 'string', 'null') }} IS NULL)\n\tAND (organization_name NOT ILIKE '%'|| {{ $fromAI('organizationNameUnlike', 'Select campaigns belonging to an organization whose name does not contain this substring.', 'string', 'null') }}||'%' OR {{ $fromAI('organizationNameUnlike', 'Select campaigns belonging to an organization whose name does not contain this substring.', 'string', 'null') }} IS NULL)\n\tAND (organization_legal_name ILIKE '%'|| {{ $fromAI('organizationLegalName', 'Select campaigns belonging to an organization whose legal name contains this substring.', 'string', 'null') }}||'%' OR {{ $fromAI('organizationLegalName', 'Select campaigns belonging to an organization whose legal name contains this substring.', 'string', 'null') }} IS NULL)\n\tAND (organization_email ILIKE '%'|| {{ $fromAI('organizationEmail', 'Select campaigns belonging to an organization whose contact email contains this substring.', 'string', 'null') }} ||'%' OR {{ $fromAI('organizationEmail', 'Select campaigns belonging to an organization whose contact email contains this substring.', 'string', 'null') }} IS NULL)\n\tAND (organization_creation_date <= {{ $fromAI('organizationCreationDateStart', 'Select campaigns belonging to an organization created on this date or newer. Date in YYYY-MM-DD. May be used along with organizationCreationDateEnd to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('organizationCreationDateStart', 'Select campaigns belonging to an organization created on this date or newer. Date in YYYY-MM-DD. May be used along with organizationCreationDateEnd to limit dates to a range.', 'string', 'null') }} IS NULL)\n\tAND (organization_creation_date >= {{ $fromAI('organizationCreationDateEnd', 'Select campaigns belonging to an organization created on this date or older. Date in YYYY-MM-DD. May be used along with organizationCreationDateStart to limit dates to a range.', 'string', 'null') }} OR {{ $fromAI('organizationCreationDateEnd', 'Select campaigns belonging to an organization created on this date or older. Date in YYYY-MM-DD. May be used along with organizationCreationDateStart to limit dates to a range.', 'string', 'null') }} IS NULL)\n;",
+        "options": {
+          "queryReplacement": "={{ $fromAI('campaignName', 'Select campaigns whose name contains this substring.', 'string', null) }},\n{{ $fromAI('campaignCreationDateStart', 'Select campaigns created on this date or newer. Date in YYYY-MM-DD format. May be used along with campaignCreationDateEnd to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('campaignCreationDateEnd', 'Select campaigns created on this date or older. Date in YYYY-MM-DD format.  May be used along with campaignCreationDateStart to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('campaignUpdationDateStart', 'Select campaigns last updated on this date or newer. Date in YYYY-MM-DD. May be used along with campaignUpdationDateEnd to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('campaignUpdationDateEnd', 'Select campaigns last updated on this date or older. Date in YYYY-MM-DD. May be used along with campaignUpdationDateStart to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('campaignEndingDateStart', 'Select campaigns set to end on this date or newer. Date in YYYY-MM-DD. May be used along with campaignEndingDateEnd to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('campaignEndingDateEnd', 'Select campaigns set to end on this date or older. Date in YYYY-MM-DD. May be used along with campaignEndingDateStart to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('organizationNameLike', 'Select campaigns belonging to an organization whose name contains this substring.', 'string', 'null') }},\n{{ $fromAI('organizationNameUnlike', 'Select campaigns belonging to an organization whose name does not contain this substring.', 'string', 'null') }},\n{{ $fromAI('organizationLegalName', 'Select campaigns belonging to an organization whose legal name contains this substring.', 'string', 'null') }},\n{{ $fromAI('organizationEmail', 'Select campaigns belonging to an organization whose contact email contains this substring.', 'string', 'null') }},\n{{ $fromAI('organizationCreationDateStart', 'Select campaigns belonging to an organization created on this date or newer. Date in YYYY-MM-DD. May be used along with organizationCreationDateEnd to limit dates to a range.', 'string', 'null') }},\n{{ $fromAI('organizationCreationDateEnd', 'Select campaigns belonging to an organization created on this date or older. Date in YYYY-MM-DD. May be used along with organizationCreationDateStart to limit dates to a range.', 'string', 'null') }}\n"
+        }
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        96,
+        208
+      ],
+      "id": "bbeb44bd-975b-4c8b-9283-dc587a89c00f",
+      "name": "Search on PromptAds database",
+      "credentials": {
+        "postgres": {
+          "id": "OlmCcDHiHmyLlzg8",
+          "name": "Postgres Connection"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Search on PromptAds database": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0fe9bc06-6305-431f-a0c8-733a997edcb3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4e3d0b04400adb4f6431ee078c14f133bd3452d6ef8d1bb34e29431066051fb3"
+  },
+  "id": "Y5hAQmFYgeL9G2zf",
+  "tags": []
+}
