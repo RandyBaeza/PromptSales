@@ -447,24 +447,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 # Sección 3
 
-##  3.1 Diseño de base de datos
-
- ### Prompt Ads
-
-  - **PostgreSQL** como motor principal.
-
-  ### Prompt CRM
-
-- **Amazon Redshift**,  para análisis de grandes volúmenes de datos y cargas intensivas de lectura.
-
-- **PostgreSQL**, para la operación transaccional diaria del CRM.
-
-  ### Prompt Content
-
-- MongoDB. 
-
- 
- ## 3.1.1 Base de datos relacional.
+## Base de datos relacional.
 
  
   ![SQL Screenshot](images/scrrenshotSQL.png)
@@ -482,7 +465,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
     
 
-## 3.2 Repository Layer Implementation
+# Repository Layer Implementation
 
 ###  **Estructura**
 
@@ -507,57 +490,55 @@ src/
 │           └── interfaces/
 │               └── campaign-repository.interface.ts
 │
-├── common/
-│   ├── database/
-│   │   ├── migrations/                      # Scripts de BD
-│   │   └── stored-procedures/               # SPs organizados
-│   └── cache/
-│       └── cache-manager.factory.ts         # Patrón Factory para Cache
+
 
 
 ```
-### 1. **Repository Layer con Stored Procedures**
 
-#### Repository with Stored Procedures
 
-  #### 1 Interfaz del Repository
+## Archivos importantes generales:
+
+  #### 1 Interfaz del Repository.
+   - Define cómo debe comportarse cualquier implementación de CampaignRepository.
   
-  [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
+  [campaign.sp.repository.interface](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
 
+ #### 2 Service
+ -  Contiene toda la lógica de negocio para las Campaigns.
   
+   [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+
   ---
-  * 2# Repository con Stored Procedures
+  
+  ##  **Stored Procedures*
+  ---
+  #### 1 Campaign.sp.repository.ts:
+  -  Implementación concreta de la interfaz del repositorio que usa Stored Procedures de PostgreSQL para todas las operaciones de base de datos. 
+  
    [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
----
-* 3# Repository en el Service
-  
-   [campaign.sp.repository](src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+ ---
 
-  ---
   
-  * 4# Stored Procedure GET en PostgreSQL:
+  #### 2 Stored Procedure GET en PostgreSQL:
     
   [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
 ---
     
-   * Stored procedure POST:
+   #### 3 Stored procedure POST:
 
      
    [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
     
 
 ---
-* 5# Repository en el Service
-  
-   [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
 
-  ---
-* 6# Env.development
+ #### 4 Env.development
+ - Se tiene que modificar REPOSITORY_STRATEGY. Si se quiere usar Stored procedures, escribir "sp".
 
-- Repository strategy: sp
-```text
+
+```bash
 
 # Database Configuration
 DB_HOST=localhost
@@ -580,23 +561,23 @@ REPOSITORY_STRATEGY=sp    <------
 
   ```
 
-  [development](src/prompt-sales-backend/.env.development)
+  [env.development](src/prompt-sales-backend/.env.development)
 
   ---
-* 7# Ejecturar en terminal
+#### 6 Ejecturar en terminal
 
  ```bash
 npm run start:dev
  ```
 ---
 
-* 8# Resultados
+ #### 7 Resultados GET y POST usando Stored Procedures
 
   ** GET http://localhost:3000/api/campaigns**
 
 ![screenshotGet](./images/sp1Lectura.png)
 
- [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
+ [postmanLecturaResultadoSP](./src/prompt-sales-backend/test/lecturaPostman.json)
 
   ---
 
@@ -604,23 +585,30 @@ npm run start:dev
  
   ![screenshotPost](./images/sp1Escritura.png)
 
-   [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
+   [postmanEscrituraResultadoSP](./src/prompt-sales-backend/test/escrituraPostman.json)
+   
+   ---
 
-### 2. **Repository Layer con ORM**
+##  **Repository Layer con ORM**
 
 
-#### 1# Entidades (campaign)
+#### 1 Entidad Campaign
+ - Representa la tabla PACampaigns en la base de datos.
 
--[development](src/prompt-sales-backend/src/modules/campaigns/entities/campaign.entity.ts)
+ [development](src/prompt-sales-backend/src/modules/campaigns/entities/campaign.entity.ts)
 
-  * 2# Repository con ORM
+#### 2 Repository con ORM
+  - Implementación concreta de la interfaz del repositorio que usa TypeORM para acceder a la base de datos. 
+  
    [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.orm.repository.ts)
 
 
-  #3 Env.development
+#### 3 Env.development
+- Se tiene que modificar REPOSITORY_STRATEGY. Si se quiere usar Stored procedures, escribir "orm".
 
   - Repository strategy: orm
-```text
+  
+```bash
 
 # Database Configuration
 DB_HOST=localhost
@@ -639,38 +627,40 @@ REDIS_DB=0
 # Application Configuration
 NODE_ENV=development
 PORT=3000
-REPOSITORY_STRATEGY=orm    <------
+REPOSITORY_STRATEGY=orm    <---------
 
   ```
-  [development](src/prompt-sales-backend/.env.development)
+  [env.development](src/prompt-sales-backend/.env.development)
 
 
 ---
 
 
-#### Resultados:
+#### 4 Resultados ORM:
 
   ** GET http://localhost:3000/api/campaigns**
+  
  ![ormLecturat](./images/orm1lectura.png)
 
- [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
+ [ResultadosPostmanLecturaORM](./src/prompt-sales-backend/test/lecturaPostman.json)
 
  
 ---
 
 ** POST http://localhost:3000/api/campaigns**
-   ![ormEscritura](./images/orm1escritura.png)
- 
-  
- 
-   [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
-  ### 3. **Caché**
 
-#### 1# Instalar Redis (CACHE MANAGER)
+   ![ResultadosPostmanEscrituraORM](./images/orm1escritura.png)
+ 
+
+   [postmanEscrituraORM](./src/prompt-sales-backend/test/escrituraPostman.json)
+   
+  ###  **Cache**
+
+#### 1 Instalar Redis (CACHE MANAGER)
 
 [Redis Windows Releases](https://github.com/microsoftarchive/redis/releases)
 
-#### 2# Configurar redis
+#### 2 Configurar redis
  
   ```bash
 
@@ -680,27 +670,26 @@ services.msc
 # iniciar servicio
 redis-server --service-start    
 
-cd prompt-sales-backend
+cd prompt-sales-backend #Para instalar redis dentro del backend
 
 npm install @nestjs/cache-manager cache-manager cache-manager-redis-store
 
 
 ```
-#### 3# Configurar Campaign Module
-* Agregar cache-manager al modulo
+
   
-[CampaignModule](src/prompt-sales-backend/src/modules/campaigns/campaign.module.ts)
-####
+  #### 3 Repositorio del cache:
+  - CampaignCachedRepository implementa caching sobre un repository que implemente la interfaz de campaigns.
   
-  #### 4# Repositorio de cache:
  ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
 
-----
 
-#### 5# env.development:
 
-  - Repository strategy: cached
-```text
+#### 4 env.development:
+
+ - REPOSITORY_STRATEGY: para activar o desactivar cache.
+ - REPOSITORY_BASE_STRATEGY: orm o stored procedure.
+```bash
 
 # Database Configuration
 DB_HOST=localhost
@@ -720,22 +709,33 @@ REDIS_DB=0
 NODE_ENV=development
 PORT=3000
 REPOSITORY_STRATEGY=cached    <------
+REPOSITORY_BASE_STRATEGY=orm  <------
 
   ```
 
-  [development](src/prompt-sales-backend/.env.development)
+  [env.development](src/prompt-sales-backend/.env.development)
 
   ---
 
 #### Cache Escritura
+- Los datos en cache están obsoletos después de un update.
 
    ![cacheEscritura](./images/CacheEscritura.png)
 
    
 ---
 #### CacheLectura
+	- Primera vez (MISS):
+   * Cache está vacío → busca en BD → guarda en cache
+   * (lento, va a BD)
+	
+   - Segunda vez (HIT):
+  * Ya está en cache → retorna desde Redis
+  *   (rápido, solo cache)
+
    ![ormLectura](./images/cacheOrmLectura.png)
 
+   ----
 
   ## Diagrama pipeline
 - Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
