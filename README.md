@@ -934,7 +934,7 @@ it('should return 409 Conflict when name already exists', async () => { /* ... *
 
 ## 3.4.4 Test seguridad
 
-### Pruebas de Validación de Roles
+
 
 #### A. Pruebas de Autorización (GRANT/REJECT)
 ```typescript
@@ -961,7 +961,7 @@ it('should reject empty role', async () => { /* ... */ });
 it('should not expose internal errors', async () => { /* ... */ });
 ```
 
-###  Análisis de Pruebas Existentes
+###  Archivo completo: 
 
 [campaigns.security](src/prompt-sales-backend/test/integration/api/campaign/security/campaigns.delete.security.spec.ts)
 
