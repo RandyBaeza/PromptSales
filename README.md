@@ -749,7 +749,7 @@ REPOSITORY_BASE_STRATEGY=orm # <------
    
 ---
 #### CacheLectura
-	- Primera vez (MISS):
+   - Primera vez (MISS):
    * Cache está vacío → busca en BD → guarda en cache
    * (lento, va a BD)
 	
