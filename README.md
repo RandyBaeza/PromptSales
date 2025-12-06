@@ -674,6 +674,8 @@ REPOSITORY_STRATEGY=orm  # <---------
  
 
    [postmanEscrituraORM](./src/prompt-sales-backend/test/escrituraPostman.json)
+
+   ---
    
   ###  **Cache**
 
