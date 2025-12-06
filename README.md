@@ -528,11 +528,11 @@ src/
    [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.sp.repository.ts)
 
 ---
-* 2# Repository en el Service
+* 3# Repository en el Service
   
    [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
   ---
-  * 3# Stored Procedure GET en PostgreSQL:
+  * 4# Stored Procedure GET en PostgreSQL:
     
   [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
@@ -545,11 +545,11 @@ src/
     
 
 ---
-* 4# Repository en el Service
+* 5# Repository en el Service
   
    [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
   ---
-* 5# Env.development
+* 6# Env.development
 
 - Repository strategy: sp
 ```text
@@ -558,7 +558,7 @@ src/
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=Discoelysiumbaby_25
+DB_PASSWORD=password
 DB_NAME=postgres
 
 # Redis Configuration
@@ -578,14 +578,14 @@ REPOSITORY_STRATEGY=sp    <------
   [development](src/prompt-sales-backend/.env.development)
 
   ---
-* 6# Ejecturar en terminal
+* 7# Ejecturar en terminal
 
  ```bash
 npm run start:dev
  ```
 ---
 
-* 7# Resultados
+* 8# Resultados
 
   ** GET http://localhost:3000/api/campaigns**
 
@@ -600,14 +600,25 @@ npm run start:dev
 
 ### 2. **Repository Layer con ORM**
 
-- Repository strategy: orm
+
+#### 1# Entidades (campaign)
+
+-[development](src/prompt-sales-backend/src/modules/campaigns/entities/campaign.entity.ts)
+
+  * 2# Repository con ORM
+   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.orm.repository.ts)
+
+
+  #3 Env.development
+
+  - Repository strategy: orm
 ```text
 
 # Database Configuration
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=Discoelysiumbaby_25
+DB_PASSWORD=password
 DB_NAME=postgres
 
 # Redis Configuration
@@ -623,12 +634,10 @@ PORT=3000
 REPOSITORY_STRATEGY=orm    <------
 
   ```
-
   [development](src/prompt-sales-backend/.env.development)
 
-  * [campaign.orm.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.orm.repository.ts)
 
-  
+---
 
    ![ormEscritura](./images/orm1escritura.png)
 
@@ -641,6 +650,8 @@ REPOSITORY_STRATEGY=orm    <------
 
   ### 3. **Caché**
 
+  
+
   - Repository strategy: orm
 ```text
 
@@ -648,7 +659,7 @@ REPOSITORY_STRATEGY=orm    <------
 DB_HOST=localhost
 DB_PORT=5432
 DB_USERNAME=postgres
-DB_PASSWORD=Discoelysiumbaby_25
+DB_PASSWORD=password
 DB_NAME=postgres
 
 # Redis Configuration
