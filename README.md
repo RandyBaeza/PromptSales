@@ -945,6 +945,6 @@ it('should not expose internal errors', async () => { /* ... */ });
 
  ![seguridad1](./images/testSeguridad.png)
 
-  ![seguridad1](./images/testSeguridad2.png)
+ 
 
 
