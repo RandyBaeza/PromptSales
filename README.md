@@ -792,13 +792,13 @@ test/
 [jest.json](src/prompt-sales-backend/test/jest-e2e.jsont)
 
   
-### Unit Testing
+## Unit Testing
 
 ### Estructura del Test Suite:
 
 [CampaignUnit](src/prompt-sales-backend/test/unit/repositories/campaign.cached.repository.spec.ts)
 
-```text
+```typescript
 
 describe('CampaignCachedRepository - Unit Test', () => {
   // Setup antes de cada test
@@ -834,7 +834,7 @@ describe('CampaignCachedRepository - Unit Test', () => {
 
 ### Ejecución y Reportes
 
-```text
+```bash
 
 # Ejecutar TODAS las pruebas
 npm test
@@ -850,6 +850,14 @@ npm run test:unit
 
 
    ![unitResult2](./images/unitTestfoto2.png)
+
+---    
+##API REST
+*verifican que los endpoints HTTP funcionen correctamente.
+
+
+
+
 
 
 
