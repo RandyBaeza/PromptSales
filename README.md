@@ -852,12 +852,53 @@ npm run test:unit
    ![unitResult2](./images/unitTestfoto2.png)
 
 ---    
-##API REST
+## API REST
 *verifican que los endpoints HTTP funcionen correctamente.
 
 
+###  Pruebas Implementadas
+
+#### Lectura (GET)
+
+```typescript
+
+```
+```typescript
+describe('GET /campaigns', () => {
+  it('should return 200 OK with campaigns array', async () => { /* ... */ });
+  it('should apply filters from query parameters', async () => { /* ... */ });
+});
+```
+#### Post
+```typescript
+// Verifican creación de recursos
+describe('POST /campaigns', () => {
+  it('should create campaign and return 201 Created', async () => { /* ... */ });
+  it('should return 400 Bad Request for invalid data', async () => { /* ... */ });
+});
+```
+
+#### Validación
+
+```typescript
+// Verifican reglas de negocio y validaciones
+it('should return 400 when name is empty string', async () => { /* ... */ });
+it('should return 409 Conflict when name already exists', async () => { /* ... */ });
+```
 
 
+### Para lectura:
+
+[campaigns.get.spec.ts](src/prompt-sales-backend/test/integration/api/campaign/campaigns.get.spec.ts)
+
+ ![campaigns.get.spec.ts](./images/TestExitosoLectura.png)
 
 
+---
 
+
+### Para escritura:
+
+[campaigns.post.spec.ts](src/prompt-sales-backend/test/integration/api/campaign/campaigns.post.spec.ts)
+
+ ![campaigns.post.spec.ts](./images/testExitosoEscritura.png)
