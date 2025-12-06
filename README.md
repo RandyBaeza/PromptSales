@@ -902,3 +902,12 @@ it('should return 409 Conflict when name already exists', async () => { /* ... *
 [campaigns.post.spec.ts](src/prompt-sales-backend/test/integration/api/campaign/campaigns.post.spec.ts)
 
  ![campaigns.post.spec.ts](./images/testExitosoEscritura.png)
+
+
+
+## Test seguridad
+
+
+
+
+
