@@ -639,15 +639,20 @@ REPOSITORY_STRATEGY=orm    <------
 
 ---
 
+
+#### Resultados:
+
+  ** GET http://localhost:3000/api/campaigns**
+ ![ormLecturat](./images/orm1lectura.png)
+
+
+---
+
+** POST http://localhost:3000/api/campaigns**
    ![ormEscritura](./images/orm1escritura.png)
-
  
-   ![ormLecturat](./images/orm1lectura.png)
-
-
-
-
-
+  
+  
   ### 3. **Caché**
 
   
@@ -679,6 +684,8 @@ REPOSITORY_STRATEGY=cache    <------
   [development](src/prompt-sales-backend/.env.development)
 
   ---
+
+  
   #### Repositorio de cache:
  ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
 
