@@ -946,5 +946,38 @@ it('should not expose internal errors', async () => { /* ... */ });
  ![seguridad1](./images/testSeguridad.png)
 
  
+### Lint
 
 
+#### Archivo de Configuración: .eslintrc.js
+
+[.eslint.js](src/prompt-sales-backend/.eslintrc.js)
+
+####  Configuración de Lint-Staged
+
+```bash
+# 1. Clonar el repositorio
+git clone <repo>
+cd <project>
+
+# 2. Instalar dependencias
+npm install
+
+# 3. Instalar extensiones de VSCode (recomendadas)
+code --install-extension dbaeumer.vscode-eslint
+
+
+# 4. Verificar configuración
+npm run lint:check
+
+
+# 5. Corregir problemas automáticamente
+npm run lint  # Fix ESLint issues
+
+```
+
+### Resultados
+
+images/linter.png
+
+ ![linter1](./images/linter.png)
