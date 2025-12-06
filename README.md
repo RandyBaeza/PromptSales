@@ -786,7 +786,8 @@ Para conectar los servidores desde un MCP Client, el URL y credenciales para con
 - Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
 - Linter de código, su configuración y uso dentro de la solución.
 
-## 3.4 Testing
+
+# 3.4 Testing
 
 ##  3.4.1 Configuración del Entorno de Testing
 
@@ -802,23 +803,25 @@ test/
 ├── integration/                   # Pruebas de integración
 │   └── api/
 │       └── campaigns.e2e.spec.ts
-├── stress/                   # Pruebas de integración
-│   └── GETcampaigns.js
-│   └── logs/
 └── jest.config.js                 # Configuración de Jest
 ```
 ### Configurar Jest
+Configura Jest para pruebas End-to-End (E2E).
 
 ### jest-e2e.json
 
 [jest.json](src/prompt-sales-backend/test/jest-e2e.jsont)
 
+---
   
 ## 3.4.2 Unit Testing
 
-### Estructura del Test Suite:
 
 [CampaignUnit](src/prompt-sales-backend/test/unit/repositories/campaign.cached.repository.spec.ts)
+
+# Para probar que el CampaignCachedRepository funciona correctamente, usando mocks.
+
+### Estructura del Test Suite:
 
 ```typescript
 
@@ -967,6 +970,7 @@ it('should not expose internal errors', async () => { /* ... */ });
 
  ![seguridad1](./images/testSeguridad.png)
 
+
 ### 3.4.5 Stress
 - Los tests de estrés se implementarán con k6 y sus archivos irán en test/stress/, estos archivos seguirán el formato de nombre TipoOperacion+NombreRecurso+.js. Por ejemplo: "test/stress/GETcampaigns.js".
 - Los informes y resultados se almacenarán automáticamente en test/stress/logs/, estos archivos seguirán el formato de nombre de NombreArchivoDeTest-YYYY-MM-DD_HHMNSS.  Por ejemplo: "test/stress/logs/GETcampaigns-2025-12-5_183254.js".
@@ -982,6 +986,8 @@ Ejemplo de prueba exitosa con Claude:
 ![](./images/testMCP.png)
 
 ### 3.4.7 Lint
+
+ESLint es analiza  código JavaScript/TypeScript para encontrar y reportar problemas potenciales.
 
 
 #### Archivo de Configuración: .eslintrc.js
