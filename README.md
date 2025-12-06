@@ -963,7 +963,7 @@ it('should not expose internal errors', async () => { /* ... */ });
 
 ###  Análisis de Pruebas Existentes
 
-[campaigns.post.spec.ts](src/prompt-sales-backend/test/integration/api/campaign/security/campaigns.delete.security.spec.ts)
+[campaigns.security](src/prompt-sales-backend/test/integration/api/campaign/security/campaigns.delete.security.spec.ts)
 
 
 ### Resultados
