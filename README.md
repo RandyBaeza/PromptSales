@@ -527,7 +527,8 @@ src/
  #### 2 Service
  -  Contiene toda la lógica de negocio para las Campaigns.
   
-   [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+   [campaign.service](prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
+
 
   ---
   
