@@ -874,7 +874,7 @@ Configura Jest para pruebas End-to-End (E2E).
 
 [CampaignUnit](src/prompt-sales-backend/test/unit/repositories/campaign.cached.repository.spec.ts)
 
-* Para probar que el CampaignCachedRepository funciona correctamente, usando mocks.
+* Para probar que el CampaignCachedRepository funciona correctamente.
 
 ### Estructura del Test Suite:
 
