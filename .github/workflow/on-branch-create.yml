@@ -1,0 +1,24 @@
+name: On Branch Create
+
+on:
+  create:
+    branches:
+      - "*"
+
+jobs:
+  init-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log branch created
+        run: echo "Branch created: ${{ github.ref_name }}"
+
+      - name: Enforce naming convention
+        run: |
+          BR=${{ github.ref_name }}
+          echo Branch: %BR%
+          if [[ ! "$BR" =~ ^(feature|bugfix|hotfix|release)\/ ]]; then
+            echo "ERROR: Invalid branch name."
+            exit 1
+          fi
