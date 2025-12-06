@@ -968,14 +968,15 @@ it('should not expose internal errors', async () => { /* ... */ });
  ![seguridad1](./images/testSeguridad.png)
 
 ### 3.4.5 Stress
-- Los tests de estrés se implementarán con k6 y sus archivos irán en src/test/stress/, estos archivos seguirán el formato de nombre TipoOperacion+NombreRecurso+.js. Por ejemplo: "src/test/stress/GETcampaigns.js".
-- Los informes y resultados se almacenarán automáticamente en src/test/stress/logs/, estos archivos seguirán el formato de nombre de NombreArchivoDeTest-YYYY-MM-DD_HHMNSS.  Por ejemplo: "src/test/stress/logs/GETcampaigns-2025-12-5_183254.js".
+- Los tests de estrés se implementarán con k6 y sus archivos irán en test/stress/, estos archivos seguirán el formato de nombre TipoOperacion+NombreRecurso+.js. Por ejemplo: "test/stress/GETcampaigns.js".
+- Los informes y resultados se almacenarán automáticamente en test/stress/logs/, estos archivos seguirán el formato de nombre de NombreArchivoDeTest-YYYY-MM-DD_HHMNSS.  Por ejemplo: "test/stress/logs/GETcampaigns-2025-12-5_183254.js".
 - Los test se ejecutan llamando a "scripts\run-stress.bat archivoTesting.js" desde la terminal en un ambiente de desarrollo local. Por ejemplo: "scripts\run-stress.bat GETcampaigns.js".
 
 ### 3.4.6 MCP testing
 La validación del funcionamiento interno de N8N se realiza automáticamente por la plataforma al ejecutar nodos con datos de prueba y configurar sus conexiones.
 
 Las pruebas prácticas de la conexión desde los MCP client y el funcionamiento de las herramientas se realiza manualmente desde un chat con agentes de IA.
+
 Ejemplo de prueba exitosa con Claude:
 
 ![](./images/testMCP.png)
