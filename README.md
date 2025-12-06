@@ -520,35 +520,6 @@ src/
 
 #### Repository with Stored Procedures
 
-### Env.development
-
-- Repository strategy: sp
-```text
-
-# Database Configuration
-DB_HOST=localhost
-DB_PORT=5432
-DB_USERNAME=postgres
-DB_PASSWORD=Discoelysiumbaby_25
-DB_NAME=postgres
-
-# Redis Configuration
-REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD= 
-REDIS_DB=0
-
-
-# Application Configuration
-NODE_ENV=development
-PORT=3000
-REPOSITORY_STRATEGY=sp    <------
-
-  ```
-
-  [development](src/prompt-sales-backend/.env.development)
-
-  ---
   * 1# Interfaz del Repository
   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
   ---
@@ -561,12 +532,15 @@ REPOSITORY_STRATEGY=sp    <------
    [campaign.sp.repository](./src/prompt-sales-backend/src/prompt-sales-backend/src/modules/campaigns/campaign.service.ts)
   ---
   * 3# Stored Procedure GET en PostgreSQL:
-    [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
+    
+  [get campaign](./src/promptAdsSQL/getCampaignSP.sql)
 
 ---
     
    * Stored procedure POST:
-    [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
+
+     
+   [post campaign](./src/promptAdsSQL/save_campaignSP.sql)
     
 
 ---
@@ -613,12 +587,14 @@ npm run start:dev
 * 7# Resultados
 
   ** GET http://localhost:3000/api/campaigns**
-  ![screenshotGet](./images/sp1Lectura.png)
+
+![screenshotGet](./images/sp1Lectura.png)
 
   ---
 
  ** POST http://localhost:3000/api/campaigns**
-    ![screenshotPost](./images/sp1Escritura.png)
+ 
+  ![screenshotPost](./images/sp1Escritura.png)
 
 
 ### 2. **Repository Layer con ORM**
