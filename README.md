@@ -1037,7 +1037,7 @@ Ejemplo de prueba exitosa con Claude:
 
 ### 3.4.7 Lint
 
-ESLint es analiza  código JavaScript/TypeScript para encontrar y reportar problemas potenciales.
+ESLint  analiza  código JavaScript/TypeScript para encontrar y reportar problemas potenciales.
 
 
 #### Archivo de Configuración: .eslintrc.js
