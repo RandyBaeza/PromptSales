@@ -925,9 +925,7 @@ it('should return 409 Conflict when name already exists', async () => { /* ... *
 
  ![campaigns.post.spec.ts](./images/testExitosoEscritura.png)
 
-```typescript
 
-```
 
 ## 3.4.4 Test seguridad
 
