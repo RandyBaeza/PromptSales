@@ -655,9 +655,40 @@ REPOSITORY_STRATEGY=orm    <------
   
   ### 3. **Caché**
 
-  
+#### 1# Instalar Redis (CACHE MANAGER)
 
-  - Repository strategy: orm
+[Redis Windows Releases](https://github.com/microsoftarchive/redis/releases)
+
+#### 2# Configurar redis
+ 
+  ```bash
+
+#Verificar que corre
+services.msc 
+
+# iniciar servicio
+redis-server --service-start    
+
+cd prompt-sales-backend
+
+npm install @nestjs/cache-manager cache-manager cache-manager-redis-store
+
+
+```
+#### 3# Configurar Campaign Module
+* Agregar cache-manager al modulo
+  
+[CampaignModule](src/prompt-sales-backend/src/modules/campaigns/campaign.module.ts)
+####
+  
+  #### 4# Repositorio de cache:
+ ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
+
+----
+
+#### 5# env.development:
+
+  - Repository strategy: cached
 ```text
 
 # Database Configuration
@@ -677,7 +708,7 @@ REDIS_DB=0
 # Application Configuration
 NODE_ENV=development
 PORT=3000
-REPOSITORY_STRATEGY=cache    <------
+REPOSITORY_STRATEGY=cached    <------
 
   ```
 
@@ -685,11 +716,9 @@ REPOSITORY_STRATEGY=cache    <------
 
   ---
 
-  
-  #### Repositorio de cache:
- ![campaign.cached.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.cached.repository.ts)
 
-----
+
+
 
    ![cacheEscritura](./images/CacheEscritura.png)
 
