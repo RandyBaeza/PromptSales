@@ -652,7 +652,9 @@ REPOSITORY_STRATEGY=orm    <------
    ![ormEscritura](./images/orm1escritura.png)
  
   
-  
+  [postmanEscritura](./src/prompt-sales-backend/test/escrituraPostman.json)
+
+   [postmanLectura](./src/prompt-sales-backend/test/lecturaPostman.json)
   ### 3. **Caché**
 
 #### 1# Instalar Redis (CACHE MANAGER)
