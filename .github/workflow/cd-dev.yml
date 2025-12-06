@@ -1,0 +1,44 @@
+name: CD - Deploy to EKS (Development)
+
+on:
+  push:
+    branches: ["develop"]
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image (DEV)
+        run: |
+          docker build -t api-dev .
+          docker tag api-dev:latest ${{ secrets.ECR_REGISTRY_DEV }}/api-dev:latest
+          docker push ${{ secrets.ECR_REGISTRY_DEV }}/api-dev:latest
+
+      - name: Update kubeconfig for DEV cluster
+        run: |
+          aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME_DEV }}
+
+      - name: Run DB migrations in DEV cluster
+         run: |
+           kubectl apply -f k8s/migration-job-dev.yml
+           kubectl wait --for=condition=complete job/run-migrations-dev --timeout=120s
+           kubectl delete job run-migrations-dev --ignore-not-found=true
+
+      - name: Apply Kubernetes manifests (DEV)
+        run: |
+          kubectl apply -f k8s/dev/
+          kubectl set image deployment/campaigns-api-dev campaigns-api-dev=${{ secrets.ECR_REGISTRY_DEV }}/api-dev:latest
+          kubectl rollout status deployment/campaigns-api-dev
