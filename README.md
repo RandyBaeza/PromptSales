@@ -745,13 +745,12 @@ REPOSITORY_STRATEGY=cached    <------
 ## 3.2 Diseño de MCP servers
 Los MCP server se implementarán usando N8N. Cada empresa tendrá su propio servidor.
 
-### 3.2.1 Configuración
-
-3.2.1.1 Nodos
+### 3.2.1.1 Nodos
 Se tendrá el nodo principal de "MCP Server Trigger" conectado a todas las herramientas expuestas como nodos. Los nodos de herramientas pueden ser "HTTP Request Tool" o "Call n8n Workflow Tool" para llamados al sistema de PromptSales y sub-workflows, respectivamente.
 
 Ejemplo de conexión de nodos:
-![Imagen del workflow](./images/N8NConnection.png)
+
+![](./images/N8NConnection.png)
 
 ### 3.2.1.2 Configuración
 El trigger puede configurarse opcionalmente con credenciales de autentificación dependiendo de los usuarios objetivo, y el path debe llevar el nombre de la subempresa del servidor.
@@ -761,15 +760,18 @@ Los nodos de tools deben tener las siguientes configuraciones y principios:
 - Notes: Explicación resumida en prosa para el Dev. Team sobre lo que hace la herramienta.
 
 Ejemplo de configuración de un tool para acceso a Postgres:
-![Configuración de la herramienta](./images/N8NConfig.png)
+
+![](./images/N8NConfig.png)
 
 ### 3.2.2 Archivos
 Cada servidor y los workflow que sean llamados desde nodos de "Call n8n Workflow Tool" se guardarán como su archivo de configuración .json en N8N/NombreSubempresa/. Por ejemplo: N8N/PromptAds/MCPServer.json. Este archivo se puede descargar desde la aplicación de N8N al tener abierto un workflow.
-![URL del trigger](./images/N8NDownload.png)
+
+![](./images/N8NDownload.png)
 
 ### 3.2.3 Datos para conectar un MCP Client
 Para conectar los servidores desde un MCP Client, el URL y credenciales para conectarse se accesan desde la configuración del trigger.
-![URL del trigger](./images/N8NURL.png)
+
+![](./images/N8NURL.png)
 
 ---
 
