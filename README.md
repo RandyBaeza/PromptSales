@@ -617,7 +617,7 @@ npm run start:dev
 #### 1 Entidad Campaign
  - Representa la tabla PACampaigns en la base de datos.
 
- [development](src/prompt-sales-backend/src/modules/campaigns/entities/campaign.entity.ts)
+ [campaignEntity](src/prompt-sales-backend/src/modules/campaigns/entities/campaign.entity.ts)
 
 #### 2 Repository con ORM
   - Implementación concreta de la interfaz del repositorio que usa TypeORM para acceder a la base de datos. 
