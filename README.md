@@ -767,3 +767,89 @@ Documentar y guiar el cómo se harían los siguientes tipos de pruebas, y a la v
 - Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
 - Linter de código, su configuración y uso dentro de la solución.
 
+# Testing
+
+##  Configuración del Entorno de Testing
+
+```text
+test/
+├── unit/                          # Pruebas unitarias
+│   ├── repositories/              # Tests de repositories
+│   │   └── campaign.cached.repository.spec.ts
+│   ├── services/                  # Tests de services
+│   │   └── campaign.service.spec.ts
+│   └── controllers/               # Tests de controllers
+│       └── campaign.controller.spec.ts
+├── integration/                   # Pruebas de integración
+│   └── api/
+│       └── campaigns.e2e.spec.ts
+└── jest.config.js                 # Configuración de Jest
+```
+### Configurar Jest
+
+### jest-e2e.json
+
+[jest.json](src/prompt-sales-backend/test/jest-e2e.jsont)
+
+  
+### Unit Testing
+
+### Estructura del Test Suite:
+
+[CampaignUnit](src/prompt-sales-backend/test/unit/repositories/campaign.cached.repository.spec.ts)
+
+```text
+
+describe('CampaignCachedRepository - Unit Test', () => {
+  // Setup antes de cada test
+  beforeEach(async () => {
+    // Configuración de mocks y módulo
+  });
+
+  describe('findById', () => {
+    // Tests para método findById
+  });
+
+  describe('create', () => {
+    // Tests para método create
+  });
+
+  describe('update', () => {
+    // Tests para método update
+  });
+
+  describe('delete', () => {
+    // Tests para método delete
+  });
+
+  describe('Cache key generation', () => {
+    // Tests para generación de keys
+  });
+});
+
+
+
+```
+---
+
+### Ejecución y Reportes
+
+```text
+
+# Ejecutar TODAS las pruebas
+npm test
+
+# Ejecutar solo pruebas unitarias
+npm run test:unit
+
+
+```
+### Resultado
+
+  ![unitResult1](./images/unitTestfoto1.png)
+
+
+   ![unitResult2](./images/unitTestfoto2.png)
+
+
+
