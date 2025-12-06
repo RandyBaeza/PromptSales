@@ -716,14 +716,14 @@ REPOSITORY_STRATEGY=cached    <------
 
   ---
 
-
-
-
+#### Cache Escritura
 
    ![cacheEscritura](./images/CacheEscritura.png)
 
- 
-   ![ormLecturat](./images/cacheOrmLectura.png)
+   
+---
+#### CacheLectura
+   ![ormLectura](./images/cacheOrmLectura.png)
 
 
   ## Diagrama pipeline
