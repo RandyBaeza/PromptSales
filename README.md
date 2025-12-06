@@ -520,7 +520,8 @@ src/
 
 #### Repository with Stored Procedures
 
-  * 1# Interfaz del Repository
+  #### 1 Interfaz del Repository
+  
   [campaign.sp.repository](./src/prompt-sales-backend/src/modules/campaigns/repositories/campaign.repository.interface.ts)
   ---
   * 2# Repository con Stored Procedures
