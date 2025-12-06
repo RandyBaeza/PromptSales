@@ -585,7 +585,7 @@ REPOSITORY_STRATEGY=sp   # <------
   [env.development](src/prompt-sales-backend/.env.development)
 
   ---
-#### 6 Ejecturar en terminal
+#### 6 Ejecutar en terminal
 
  ```bash
 npm run start:dev
