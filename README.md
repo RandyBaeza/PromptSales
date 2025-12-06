@@ -445,9 +445,9 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 
 
-# Entregable 3 final - 25%
+# Sección 3
 
-##  Diseño de base de datos
+##  3.1 Diseño de base de datos
 
  ### Prompt Ads
 
@@ -464,7 +464,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 - MongoDB. 
 
  
- ## Nase de datos relacional.
+ ## 3.1.1 Base de datos relacional.
 
  
   ![SQL Screenshot](images/scrrenshotSQL.png)
@@ -482,7 +482,7 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
     
 
-## Repository Layer Implementation
+## 3.2 Repository Layer Implementation
 
 ###  **Estructura**
 
@@ -740,25 +740,31 @@ REPOSITORY_STRATEGY=cached    <------
   ## Diagrama pipeline
 - Seleccione la tecnología y haga un diseño de procesos o data pipeline que va a permitir traer información de las bases de datos de las subempresas, sumarizandola en la base de datos de PromptSales. Se sugiere hacer un diagrama para esto y que tenga las reglas de los pipelines, no olvide agregar criterios de delta para evitar traer información repetida.
 
+---
 
-## Diseño de MCP servers
-Dado que la base de datos de PromptSales es usada para:
+## 3.2 Diseño de MCP servers
+Los MCP server se implementarán usando N8N. Cada empresa tendrá su propio servidor.
 
-Registrar toda la información que se procesa en el portal web centralizado.
-Almacena información resumida de efectividad de campañas para consultas rápidas, información que viene de los otros sistemas
-Guarda información general de integración de las AI
-Diseñe e implemente un MCP server que permita realizar consultas en lenguaje natural sobre el rendimiento de las compañas, las ventas logradas, el alcance, los canales usados, la geografía usada y cualquier otra información que la AI pueda obtener.
+### 3.2.1 Configuración
 
-Documentar pautas de creación de MCP servers: ubicación de configuración, reglas, código de implementación, tools, resources y prompts.
+3.2.1.1 Nodos
 
-Diseñar MCP servers valiosos para todo el sistema y diagramar la interacción entre ellos. Solo se diseñan por diagrama, no se implementan todos, solo el solicitado arriba.
+3.2.1.2 Configuración
 
-## Deployment
-Indicar la tecnologia, archivos y scripts que se van a utilizar para hacer el deployment en cloud, así como también para el CI CD, debidamente vinculado a código.
-Indicar y guiar como se va a dar mantenimiento y deploy de los migrations de bases de datos
-Crear github actions básicos que al hacer push al branch principal de deployment se ejecute alguna operación o regla básica, esto para entrenar levemente el uso de estos actions en los procesos de deployment.
-Testability
-Documentar y guiar el cómo se harían los siguientes tipos de pruebas, y a la vez implementar, ejecutar y documentar resultados de pruebas ejemplo que deben quedar en el source code y debidamente configuradas para su ejecución. Se sugiere fuertemente que investigue la batería de servicios de diseño, mantenimiento, ejecución, actualización de QA soportada por AI, esto para que su diseño de pruebas se haga con prácticas recientes y herramientas con capacidades de AI:
+### 3.2.2 Folders
+
+#### 3.2.2.1 Estructura
+Cada servidor y los workflow que sean llamados por herramientas se guardarán como su archivo de configuración .json en N8N/NombreSubempresa/. Por ejemplo: N8N/PromptAds/MCPServer.json
+
+#### 3.2.2.2 Descarga del archivo
+
+### 3.2.3 Conexión con el servidor
+
+---
+
+## 3.3 Deployment
+
+---
 
 ## Unit testing de al menos una clase.
 - Test de REST API, de una operación de lectura y otra de escritura.
@@ -767,9 +773,9 @@ Documentar y guiar el cómo se harían los siguientes tipos de pruebas, y a la v
 - Test del MCP server creado anteriormente, debe ser probados y que los resultados obtenidos sean corroborados automáticaente.
 - Linter de código, su configuración y uso dentro de la solución.
 
-# Testing
+## 3.4 Testing
 
-##  Configuración del Entorno de Testing
+##  3.4.1 Configuración del Entorno de Testing
 
 ```text
 test/
@@ -792,7 +798,7 @@ test/
 [jest.json](src/prompt-sales-backend/test/jest-e2e.jsont)
 
   
-## Unit Testing
+## 3.4.2 Unit Testing
 
 ### Estructura del Test Suite:
 
@@ -852,7 +858,7 @@ npm run test:unit
    ![unitResult2](./images/unitTestfoto2.png)
 
 ---    
-## API REST
+## 3.4.3 API REST
 *verifican que los endpoints HTTP funcionen correctamente.
 
 
@@ -907,7 +913,7 @@ it('should return 409 Conflict when name already exists', async () => { /* ... *
 
 ```
 
-## Test seguridad
+## 3.4.4 Test seguridad
 
 ### Pruebas de Validación de Roles
 
@@ -945,8 +951,12 @@ it('should not expose internal errors', async () => { /* ... */ });
 
  ![seguridad1](./images/testSeguridad.png)
 
- 
-### Lint
+### 3.4.5 Stress
+- Los tests de estrés se implementarán con k6 y sus archivos irán en src/test/stress/, estos archivos seguirán el formato de nombre TipoOperacion+NombreRecurso+.js. Por ejemplo: "src/test/stress/GETcampaigns.js".
+- Los informes y resultados se almacenarán automáticamente en src/test/stress/logs/, estos archivos seguirán el formato de nombre de NombreArchivoDeTest-YYYY-MM-DD_HHMNSS.  Por ejemplo: "src/test/stress/logs/GETcampaigns-2025-12-5_183254.js".
+- Los test se ejecutan llamando a "scripts\run-stress.bat archivoTesting.js" desde la terminal en un ambiente de desarrollo local. Por ejemplo: "scripts\run-stress.bat GETcampaigns.js".
+
+### 3.4.6 Lint
 
 
 #### Archivo de Configuración: .eslintrc.js
