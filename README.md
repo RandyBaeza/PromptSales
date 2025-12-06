@@ -886,9 +886,6 @@ npm run test:unit
 #### Lectura (GET)
 
 ```typescript
-
-```
-```typescript
 describe('GET /campaigns', () => {
   it('should return 200 OK with campaigns array', async () => { /* ... */ });
   it('should apply filters from query parameters', async () => { /* ... */ });
