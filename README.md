@@ -972,7 +972,15 @@ it('should not expose internal errors', async () => { /* ... */ });
 - Los informes y resultados se almacenarán automáticamente en src/test/stress/logs/, estos archivos seguirán el formato de nombre de NombreArchivoDeTest-YYYY-MM-DD_HHMNSS.  Por ejemplo: "src/test/stress/logs/GETcampaigns-2025-12-5_183254.js".
 - Los test se ejecutan llamando a "scripts\run-stress.bat archivoTesting.js" desde la terminal en un ambiente de desarrollo local. Por ejemplo: "scripts\run-stress.bat GETcampaigns.js".
 
-### 3.4.6 Lint
+### 3.4.6 MCP testing
+La validación del funcionamiento interno de N8N se realiza automáticamente por la plataforma al ejecutar nodos con datos de prueba y configurar sus conexiones.
+
+Las pruebas prácticas de la conexión desde los MCP client y el funcionamiento de las herramientas se realiza manualmente desde un chat con agentes de IA.
+Ejemplo de prueba exitosa con Claude:
+
+![](./images/testMCP.png)
+
+### 3.4.7 Lint
 
 
 #### Archivo de Configuración: .eslintrc.js
