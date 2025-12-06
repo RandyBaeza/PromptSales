@@ -578,7 +578,7 @@ REDIS_DB=0
 # Application Configuration
 NODE_ENV=development
 PORT=3000
-REPOSITORY_STRATEGY=sp    <------
+REPOSITORY_STRATEGY=sp   # <------
 
   ```
 
@@ -648,7 +648,7 @@ REDIS_DB=0
 # Application Configuration
 NODE_ENV=development
 PORT=3000
-REPOSITORY_STRATEGY=orm    <---------
+REPOSITORY_STRATEGY=orm  # <---------
 
   ```
   [env.development](src/prompt-sales-backend/.env.development)
@@ -729,8 +729,8 @@ REDIS_DB=0
 # Application Configuration
 NODE_ENV=development
 PORT=3000
-REPOSITORY_STRATEGY=cached    <------
-REPOSITORY_BASE_STRATEGY=orm  <------
+REPOSITORY_STRATEGY=cached   # <------
+REPOSITORY_BASE_STRATEGY=orm # <------
 
   ```
 
