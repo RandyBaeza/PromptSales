@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: campaigns-config
+data:
+  NODE_ENV: "production"
+  DB_HOST: "<RDS-ENDPOINT>"
+  DB_NAME: "campaigns"
+  REDIS_HOST: "<ELASTICACHE-ENDPOINT>"
+  S3_BUCKET: "<YOUR_BUCKET_NAME>"

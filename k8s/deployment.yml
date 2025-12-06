@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: campaigns-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: campaigns-api
+  template:
+    metadata:
+      labels:
+        app: campaigns-api
+    spec:
+      containers:
+        - name: campaigns-api
+          image: <ECR_REGISTRY>/campaigns-api:latest
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: campaigns-config
+            - secretRef:
+                name: campaigns-secret
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 20
+            periodSeconds: 20

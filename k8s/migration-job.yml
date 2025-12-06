@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: run-migrations
+spec:
+  template:
+    spec:
+      containers:
+        - name: migrations
+          image: <ECR_REGISTRY>/api:latest
+          command: ["npm", "run", "typeorm", "migration:run"]
+          envFrom:
+            - configMapRef:
+                name: campaigns-config
+            - secretRef:
+                name: campaigns-secret
+      restartPolicy: Never
