@@ -447,6 +447,27 @@ El **control de versiones** del código se gestionará mediante **GitFlow** (bra
 
 # Sección 3
 
+# Diseño de Base de Datos
+
+
+## Prompt Ads
+
+Utiliza PostgreSQL como motor principal.
+
+## Prompt CRM
+
+Este sistema trabaja con dos motores:
+
+- Amazon Redshift,  para análisis de grandes volúmenes de datos y cargas intensivas de lectura.
+
+- PostgreSQL, para la operación transaccional diaria del CRM.
+
+## Prompt Content
+
+Emplea MongoDB, base de datos no relacional orientada a documentos.
+
+
+
 ## Base de datos relacional.
 
  
@@ -511,7 +532,7 @@ src/
   ---
   
   ##  **Stored Procedures**
-  ---
+  
   #### 1 Campaign.sp.repository.ts:
   -  Implementación concreta de la interfaz del repositorio que usa Stored Procedures de PostgreSQL para todas las operaciones de base de datos. 
   
